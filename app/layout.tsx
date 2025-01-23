@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import { persistor, store } from "@/Redux/store";
 import Header from "../components/Header";
 import { PersistGate } from "redux-persist/integration/react";
+import ProtectedRoute from "@/components/ProtectedRoute";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,7 +17,6 @@ const geistMono = Geist_Mono({
   variable: "--font-geist-mono",
   subsets: ["latin"],
 });
-
 
 export default function RootLayout({
   children,
@@ -31,8 +31,10 @@ export default function RootLayout({
       >
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
-            <Header />
-            {children}
+            <ProtectedRoute>
+              <Header />
+              {children}
+            </ProtectedRoute>
           </PersistGate>
         </Provider>
       </body>
