@@ -4,7 +4,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Provider } from "react-redux";
 import { persistor, store } from "@/Redux/store";
-import Header from "./components/Header";
+import Header from "../components/Header";
 import { PersistGate } from "redux-persist/integration/react";
 
 const geistSans = Geist({
