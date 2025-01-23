@@ -3,8 +3,9 @@ import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import { Provider } from "react-redux";
-import { store } from "@/Redux/store";
+import { persistor, store } from "@/Redux/store";
 import Header from "./components/Header";
+import { PersistGate } from "redux-persist/integration/react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -16,9 +17,6 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-// export const metadata: Metadata = {
-//   title: "Kriapay",
-// };
 
 export default function RootLayout({
   children,
@@ -32,9 +30,10 @@ export default function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider store={store}>
-          {" "}
-          <Header />
-          {children}
+          <PersistGate loading={null} persistor={persistor}>
+            <Header />
+            {children}
+          </PersistGate>
         </Provider>
       </body>
     </html>
