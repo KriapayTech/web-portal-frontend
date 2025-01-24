@@ -1,6 +1,6 @@
 "use client";
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Poppins } from "next/font/google";
 import "./globals.css";
 import { Provider } from "react-redux";
 import { persistor, store } from "@/Redux/store";
@@ -8,13 +8,9 @@ import Header from "../components/Header";
 import { PersistGate } from "redux-persist/integration/react";
 import ProtectedRoute from "@/components/ProtectedRoute";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const poppins = Poppins({
+  variable: "--font-poppins",
+  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
   subsets: ["latin"],
 });
 
@@ -26,9 +22,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <title>KriaPay</title>
-      <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased`}
-      >
+      <body className={`${poppins.variable}  antialiased`}>
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <ProtectedRoute>

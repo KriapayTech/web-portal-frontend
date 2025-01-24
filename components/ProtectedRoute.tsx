@@ -13,7 +13,7 @@ const ProtectedRoute = ({ children }: Children) => {
   useEffect(() => {
     if (!loading) {
       if (!user) {
-        router.push("/signup");
+        router.push("/login");
       }
     }
   }, [user, router]);
@@ -52,7 +52,12 @@ const ProtectedRoute = ({ children }: Children) => {
     ); // Replace with a loading spinner or skeleton UI
   }
 
-  if (!user) {
+  if (
+    !user &&
+    !pathName.includes("/login") &&
+    !user &&
+    !pathName.includes("/signup")
+  ) {
     return null;
   }
 
