@@ -16,7 +16,7 @@ const page = () => {
   return (
     <div className="flex h-screen ">
       {/* Left section with background */}
-      <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden">
+      <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden hidden lg:block">
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
         <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
@@ -46,7 +46,7 @@ const page = () => {
           className="absolute bottom-0 -right-20 z-0"
           priority
         />
-        <div className="flex items-center justify-center flex-col mt-96 relative z-20">
+        <div className="absolute bottom-20 left-0 w-full flex items-center justify-center flex-col mb-5 z-20">
           <p className="text-3xl font-medium text-white">
             Pay less to send more.
           </p>
@@ -57,11 +57,18 @@ const page = () => {
         </div>
       </div>
 
-      <div className="bg-white flex-1 flex  pt-28 justify-center min-h-screen relative">
-        <div className="flex flex-col">
-          <p className="text-[#0A3C43] font-medium text-2xl">Hello,</p>
+      <div className="bg-white flex-1 flex items-center lg:items-start px-8  lg:px-0  lg:pt-28 justify-center min-h-screen relative">
+        <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+        <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+        <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+        <div className="flex flex-col z-20 ">
+          <p
+            className="text-[#0A3C43] font-medium text-2xl  lg:px-0 leading-9"
+          >
+            Hello,
+          </p>
           <p className="text-sm font-medium mb-5">Sign in to get started</p>
-          <form className="space-y-4 mt-4">
+          <form className="space-y-4 mt-4 ">
             <div className="space-y-2">
               <Label htmlFor="email">Email address</Label>
               <Input
@@ -85,31 +92,49 @@ const page = () => {
                 onChange={handleSignIn}
               />
             </div>
-            <p className="font-medium text-sm">
-              Forgot Password ?{" "}
-              <span className="text-green-600 mt-10 mb-5">Reset Here</span>
-            </p>
-            <Button
-              className="w-96 h-14 rounded-md bg-[#0A3C43] text-white"
-              type="submit"
-            >
-              Login
-            </Button>
+            <div className="lg:pt-10 pt-8">
+              <p className="font-medium text-sm ">
+                Forgot Password ?{" "}
+                <span className="text-green-600  mb-5">Reset Here</span>
+              </p>
+              <Button
+                className="w-96 h-14 mt-5 rounded-md bg-[#0A3C43] text-white"
+                type="submit"
+              >
+                Login
+              </Button>
+            </div>
           </form>
           <div className="absolute bottom-5">
-          <p className="font-medium text-sm mb-2 ">
-            New here? <span className="text-green-600">Create account</span>
-          </p>{" "}
-          <p className="font-medium text-sm">
-            {" "}
-            © 2024 Kria Technologies Ltd. All rights reserved.
-            <span className="text-green-600">
-              Terms & Conditions Privacy Policies
-            </span>
-          </p>
+            <p className="font-medium text-sm mb-5 ">
+              New here? <span className="text-green-600">Create account</span>
+            </p>{" "}
+            <p className="font-medium text-sm">
+              {" "}
+              © 2024 Kria Technologies Ltd. All rights reserved.{" "}
+              <span className="text-green-600 underline">
+                Terms & Conditions Privacy Policies
+              </span>
+            </p>
           </div>
-        
         </div>
+        <Image
+          src={"/hourglass.svg"}
+          alt="hourglass logo"
+          height={500}
+          width={500}
+          className="absolute top-0 lg:hidden -left-8 z-0"
+          priority
+        />
+
+        <Image
+          src={"/hourglass2.svg"}
+          alt="hourglass logo"
+          height={400}
+          width={400}
+          className="absolute bottom-10 right-0 lg:hidden z-0"
+          priority
+        />
       </div>
     </div>
   );

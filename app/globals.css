@@ -65,4 +65,8 @@
   }
 }
 
+body {
+  font-family: var(--font-poppins, monospace) !important;
+}
+
 
