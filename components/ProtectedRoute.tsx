@@ -12,7 +12,12 @@ const ProtectedRoute = ({ children }: Children) => {
 
   useEffect(() => {
     if (!loading) {
-      if (!user) {
+      if (
+        !user &&
+        !pathName.includes("/login") &&
+        !user &&
+        !pathName.includes("/signup")
+      ) {
         router.push("/signup");
       }
     }
