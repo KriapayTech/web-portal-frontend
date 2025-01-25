@@ -5,13 +5,16 @@ import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import {DatePicker} from "@heroui/date-picker";
+import { DatePicker } from "@heroui/date-picker";
+import "react-phone-number-input/style.css";
+import PhoneInput from "react-phone-number-input";
 
 const page = () => {
   const [formData, setFormData] = useState({
     lastName: "",
     firstName: "",
     password: "",
+    phoneNumber: "",
   });
   const handleSignIn = (e: any) => {
     const { name, value } = e.target;
@@ -107,53 +110,49 @@ const page = () => {
               <Label htmlFor="lastName" className="text-sm font-medium mb-5">
                 DOB
               </Label>
-              <DatePicker className="bg-white border-b-2 border-black" variant="underlined" />
-              {/* <input
-                id="lastName"
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                className="w-full text-sm px-4 py-2 outline-none border-b-2 border-black  focus:ring-0 "
-                onChange={handleSignIn}
-                placeholder="Enter your date of birth"
-              /> */}
+              <DatePicker
+                className="bg-white border-b-2 border-black"
+                variant="underlined"
+              />
             </div>{" "}
             <div className="space-y-1 h-14 pt-5 ">
               <Label htmlFor="lastName" className="text-sm font-medium mb-5">
                 Phone Number
               </Label>
-              <input
-                id="lastName"
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                className="w-full text-sm px-4 py-2 outline-none border-b-2 border-black  focus:ring-0 "
-                onChange={handleSignIn}
-                placeholder="Enter your Phone Number "
+              <PhoneInput
+                placeholder="Enter Phone Number"
+                international
+                withCountryCallingCode
+                defaultCountry="US"
+                value={formData.phoneNumber}
+                onChange={(value) =>
+                  setFormData((prev) => ({
+                    ...prev,
+                    phoneNumber: value || "", // Fallback to an empty string if undefined
+                  }))
+                }
+                className="border-b-2 pb-2 border-black custom-phone-input "
               />
             </div>
-            <div className="lg:pt-10 pt-2">
-              <p className="font-medium text-sm ">
-                Forgot Password ?{" "}
-                <span className="text-green-600  mb-5">Reset Here</span>
-              </p>
+            <div className="lg:pt-10 pt-2 pb-5">
+            
               <Button
-                className="w-96 h-14 mt-5 rounded-md bg-[#0A3C43] text-white"
+                className="w-full h-14 mt-5 rounded-md bg-[#0A3C43] text-white"
                 type="submit"
               >
-                Login
+                Sign up
               </Button>
             </div>
           </form>
-          <div className="absolute bottom-5">
+          <div className="absolute bottom-0 sm:bottom-4 lg:bottom-7">
             <p className="font-medium text-sm mb-5 ">
-              New here?{" "}
+              Already have an account ?{" "}
               <Link href={"/signup"}>
                 {" "}
-                <span className="text-green-600">Create account</span>
+                <span className="text-green-600">Log in </span>
               </Link>
             </p>{" "}
-            <p className="font-medium text-sm">
+            <p className="font-medium text-sm pr-8">
               {" "}
               © 2024 Kria Technologies Ltd. All rights reserved.{" "}
               <span className="text-green-600 underline">
