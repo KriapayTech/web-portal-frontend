@@ -5,17 +5,10 @@ import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import { DatePicker } from "@heroui/date-picker";
-import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
+
 
 const page = () => {
-  const [formData, setFormData] = useState({
-    lastName: "",
-    firstName: "",
-    password: "",
-    phoneNumber: "",
-  });
+  const [formData, setFormData] = useState({ email: "", password: "" });
   const handleSignIn = (e: any) => {
     const { name, value } = e.target;
     // Update form data
@@ -66,93 +59,61 @@ const page = () => {
         </div>
       </div>
 
-      <div className="bg-white flex-1 flex items-center lg:items-start px-8  lg:px-0  lg:pt-5 justify-center min-h-screen relative">
+      <div className="bg-white flex-1 flex items-center lg:items-start px-8  lg:px-0  lg:pt-28 justify-center min-h-screen relative">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="flex flex-col z-20 ">
-          <p className="text-[#0A3C43] w-[450px] font-medium text-2xl  lg:px-0 leading-9">
-            Seamlessly transfer money across African countries
+          <p className="text-[#0A3C43] font-medium text-2xl  lg:px-0 leading-9">
+            Hello,
           </p>
-          <p className="text-sm font-medium mb-5 mt-2">
-            Input your details to get started{" "}
-          </p>
-          <form className="space-y-4  ">
-            <div className="space-y-1 h-14 mb-5 ">
-              <Label htmlFor="lastName" className="text-sm font-medium mb-5">
-                Last name
-              </Label>
-              <input
-                id="lastName"
-                type="text"
-                name="lastName"
-                value={formData.lastName}
-                className="w-full text-sm px-4 py-2 outline-none border-b-2 border-black  focus:ring-0 "
+          <p className="text-sm font-medium mb-5">Sign in to get started</p>
+          <form className="space-y-4 mt-4 ">
+            <div className="space-y-2">
+              <Label htmlFor="email">Email address</Label>
+              <Input
+                id="email"
+                type="email"
+                name="email"
+                value={formData.email}
+                className="w-96 h-14 rounded-lg text-lg outline-none border-[1px] border-black focus:border-none focus:outline-none"
                 onChange={handleSignIn}
-                placeholder="Enter your last name "
-              />
-            </div>{" "}
-            <div className="space-y-1 h-14 pt-1 ">
-              <Label htmlFor="lastName" className="text-sm font-medium">
-                First name
-              </Label>
-              <input
-                id="firstName"
-                type="text"
-                name="firstName"
-                value={formData.firstName}
-                className="w-full text-sm px-4 py-2 outline-none border-b-2 border-black  focus:ring-0 "
-                onChange={handleSignIn}
-                placeholder="Enter your First name "
-              />
-            </div>{" "}
-            <div className="space-y-1 h-14 pt-3 ">
-              <Label htmlFor="lastName" className="text-sm font-medium mb-5">
-                DOB
-              </Label>
-              <DatePicker
-                className="bg-white border-b-2 border-black"
-                variant="underlined"
-              />
-            </div>{" "}
-            <div className="space-y-1 h-14 pt-5 ">
-              <Label htmlFor="lastName" className="text-sm font-medium mb-5">
-                Phone Number
-              </Label>
-              <PhoneInput
-                placeholder="Enter Phone Number"
-                international
-                withCountryCallingCode
-                defaultCountry="US"
-                value={formData.phoneNumber}
-                onChange={(value) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    phoneNumber: value || "", // Fallback to an empty string if undefined
-                  }))
-                }
-                className="border-b-2 pb-2 border-black custom-phone-input "
+                placeholder="johndoe@gmail.com"
               />
             </div>
-            <div className="lg:pt-10 pt-2 pb-5">
-            
+            <div className="space-y-2">
+              <Label htmlFor="current">Password</Label>
+              <Input
+                id="current"
+                type="password"
+                name="password"
+                className="w-96 h-14 rounded-lg  outline-none border-[1px] border-black focus:border-none focus:outline-none"
+                value={formData.password}
+                onChange={handleSignIn}
+              />
+            </div>
+            <div className="lg:pt-10 pt-8">
+              <p className="font-medium text-sm ">
+                Forgot Password ?{" "}
+                <span className="text-green-600  mb-5">Reset Here</span>
+              </p>
               <Button
-                className="w-full h-14 mt-5 rounded-md bg-[#0A3C43] text-white"
+                className="w-96 h-14 mt-5 rounded-md bg-[#0A3C43] text-white"
                 type="submit"
               >
-                Sign up
+                Login
               </Button>
             </div>
           </form>
-          <div className="absolute bottom-0 sm:bottom-4 lg:bottom-7">
+          <div className="absolute bottom-5">
             <p className="font-medium text-sm mb-5 ">
-              Already have an account ?{" "}
-              <Link href={"/signup"}>
+              New here?{" "}
+              <Link href={'/signup'}>
                 {" "}
-                <span className="text-green-600">Log in </span>
+                <span className="text-green-600">Create account</span>
               </Link>
             </p>{" "}
-            <p className="font-medium text-sm pr-8">
+            <p className="font-medium text-sm">
               {" "}
               © 2024 Kria Technologies Ltd. All rights reserved.{" "}
               <span className="text-green-600 underline">
