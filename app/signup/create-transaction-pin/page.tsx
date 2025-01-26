@@ -3,12 +3,13 @@ import { Button } from "@/components/ui/button";
 
 import Image from "next/image";
 
-import React from "react";
+import React, { useState } from "react";
 
 import "react-phone-number-input/style.css";
 import { InputOtp } from "@heroui/react";
 
 const page = () => {
+  const [transactionalPin, setTransactionalPin] = useState("");
   return (
     <div className="flex   h-screen ">
       {/* Left section with background */}
@@ -44,6 +45,8 @@ const page = () => {
           <InputOtp
             length={4}
             variant="flat"
+            value={transactionalPin}
+            onValueChange={setTransactionalPin}
             className=""
             size="lg"
             width={200}

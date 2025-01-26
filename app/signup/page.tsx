@@ -26,7 +26,7 @@ const Page = () => {
   };
   const handleSignInSubmit = (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+  try
   };
 
   return (
