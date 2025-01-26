@@ -148,7 +148,7 @@ const PasswordCreationPage: React.FC = () => {
               !validations.every((validation) => validation.test(password))
             }
           >
-            Create Account
+             Next
           </Button>
         </div>
          <Image
