@@ -4,16 +4,20 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
-import React, { ChangeEvent, useState } from "react";
-
+import React, { ChangeEvent, FormEvent, useState } from "react";
 
 const Page = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+
   const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     // Update form data
     setFormData((prev) => ({ ...prev, [name]: value }));
     // Validate inputs
+  };
+  const handleLoginSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData);
   };
   return (
     <div className="flex h-screen ">
@@ -68,7 +72,7 @@ const Page = () => {
             Hello,
           </p>
           <p className="text-sm font-medium mb-5">Sign in to get started</p>
-          <form className="space-y-4 mt-4 ">
+          <form className="space-y-4 mt-4 " onSubmit={handleLoginSubmit}>
             <div className="space-y-2">
               <Label htmlFor="email">Email address</Label>
               <Input
@@ -98,7 +102,8 @@ const Page = () => {
                 <span className="text-green-600  mb-5">Reset Here</span>
               </p>
               <Button
-                className="w-96 h-14 mt-5 rounded-md bg-[#0A3C43] text-white"
+                disabled={!formData.password || !formData.email}
+                className="w-96 h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
                 type="submit"
               >
                 Login
@@ -108,7 +113,7 @@ const Page = () => {
           <div className="absolute bottom-5">
             <p className="font-medium text-sm mb-5 ">
               New here?{" "}
-              <Link href={'/signup'}>
+              <Link href={"/signup"}>
                 {" "}
                 <span className="text-green-600">Create account</span>
               </Link>

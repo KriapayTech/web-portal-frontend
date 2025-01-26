@@ -14,6 +14,7 @@ const Page = () => {
     firstName: "",
     password: "",
     phoneNumber: "",
+    dateOfBirth: "",
   });
   const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -65,7 +66,7 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="bg-white flex-1 flex items-center lg:items-start px-8  lg:px-0  lg:pt-10 justify-center min-h-screen relative">
+      <div className="bg-white flex-1 flex items-center lg:items-start px-20  lg:px-0  lg:pt-10 justify-center min-h-screen relative">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
@@ -112,6 +113,7 @@ const Page = () => {
               <DatePicker
                 className="bg-white border-b-2 border-black"
                 variant="underlined"
+                // onChange={handleSignIn}
               />
             </div>{" "}
             <div className="space-y-1 h-14 pt-5 ">
@@ -134,7 +136,6 @@ const Page = () => {
               />
             </div>
             <div className="lg:pt-10 pt-2 pb-5">
-            
               <Button
                 className="w-full h-14 mt-5 rounded-md bg-[#0A3C43] text-white"
                 type="submit"
