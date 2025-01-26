@@ -72,7 +72,7 @@ const Page = () => {
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="flex flex-col z-20 ">
           <p className="text-[#0A3C43] w-[450px] font-medium text-2xl  lg:px-0 leading-9">
-            Seamlessly transfer money across African countries..
+            Seamlessly transfer money across African countries...
           </p>
           <p className="text-sm font-medium mb-5 mt-2">
             Input your details to get started{" "}
