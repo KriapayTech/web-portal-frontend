@@ -3,10 +3,11 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
-import React, { ChangeEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useState } from "react";
 import { DatePicker } from "@heroui/date-picker";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
+import { parseDate } from "@internationalized/date";
 
 const Page = () => {
   const [formData, setFormData] = useState({
@@ -16,12 +17,24 @@ const Page = () => {
     phoneNumber: "",
     dateOfBirth: "",
   });
-  const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    // Update form data
-    setFormData((prev) => ({ ...prev, [name]: value }));
-    // Validate inputs
+  // const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
+  //   const { name, value } = e.target;
+  //   // Update form data
+  //   setFormData((prev) => ({ ...prev, [name]: `${value}` }));
+  //   // Validate inputs
+  // };
+
+  const handleSignIn = (value: any, name: any): any => {
+    setFormData((prevData: any) => ({
+      ...prevData,
+      [name]: `${value}`,
+    }));
   };
+  const handleSignInSubmit = (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(formData);
+  };
+
   return (
     <div className="flex h-screen ">
       {/* Left section with background */}
@@ -72,12 +85,12 @@ const Page = () => {
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="flex flex-col z-20 ">
           <p className="text-[#0A3C43]  font-medium text-2xl  lg:px-0 leading-9">
-            Seamlessly transfer money across African countries...
+            Seamlessly transfer money across African countries.
           </p>
           <p className="text-sm font-medium mb-5 mt-2">
             Input your details to get started{" "}
           </p>
-          <form className="space-y-4  ">
+          <form className="space-y-4" onSubmit={handleSignInSubmit}>
             <div className="space-y-1 h-14 mb-5 ">
               <Label htmlFor="lastName" className="text-sm font-medium mb-5">
                 Last name
@@ -88,7 +101,7 @@ const Page = () => {
                 name="lastName"
                 value={formData.lastName}
                 className="w-full text-sm px-4 py-2 outline-none border-b-2 border-black  focus:ring-0 "
-                onChange={handleSignIn}
+                onChange={(e) => handleSignIn(e.target.value, "lastName")}
                 placeholder="Enter your last name "
               />
             </div>{" "}
@@ -102,7 +115,7 @@ const Page = () => {
                 name="firstName"
                 value={formData.firstName}
                 className="w-full text-sm px-4 py-2 outline-none border-b-2 border-black  focus:ring-0 "
-                onChange={handleSignIn}
+                onChange={(e) => handleSignIn(e.target.value, "firstName")}
                 placeholder="Enter your First name "
               />
             </div>{" "}
@@ -113,7 +126,12 @@ const Page = () => {
               <DatePicker
                 className="bg-white border-b-2 border-black"
                 variant="underlined"
-                // onChange={handleSignIn}
+                value={
+                  formData.dateOfBirth && formData.dateOfBirth !== ""
+                    ? parseDate(formData.dateOfBirth)
+                    : null
+                }
+                onChange={(value) => handleSignIn(value, "dateOfBirth")}
               />
             </div>{" "}
             <div className="space-y-1 h-14 pt-5 ">
@@ -126,12 +144,13 @@ const Page = () => {
                 withCountryCallingCode
                 defaultCountry="US"
                 value={formData.phoneNumber}
-                onChange={(value) =>
-                  setFormData((prev) => ({
-                    ...prev,
-                    phoneNumber: value || "", // Fallback to an empty string if undefined
-                  }))
-                }
+                onChange={(value) => handleSignIn(value, "phoneNumber")}
+                // onChange={(value) =>
+                //   setFormData((prev) => ({
+                //     ...prev,
+                //     phoneNumber: value || "", // Fallback to an empty string if undefined
+                //   }))
+                // }
                 className="border-b-2 pb-2 border-black custom-phone-input "
               />
             </div>
@@ -147,7 +166,7 @@ const Page = () => {
           <div className="absolute bottom-0 sm:bottom-4 lg:bottom-7">
             <p className="font-medium text-sm mb-5 ">
               Already have an account ?{" "}
-              <Link href={"/signup"}>
+              <Link href={"/login"}>
                 {" "}
                 <span className="text-green-600">Log in </span>
               </Link>
