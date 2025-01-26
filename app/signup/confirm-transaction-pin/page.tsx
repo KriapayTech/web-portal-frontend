@@ -1,13 +1,8 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import Image from "next/image";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { DatePicker } from "@heroui/date-picker";
+import React from "react";
 import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
 import { InputOtp } from "@heroui/react";
 
 const page = () => {

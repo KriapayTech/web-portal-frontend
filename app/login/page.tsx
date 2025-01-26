@@ -4,12 +4,12 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 
 
-const page = () => {
+const Page = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
-  const handleSignIn = (e: any) => {
+  const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     // Update form data
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -144,4 +144,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

@@ -1,13 +1,11 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+
 import Image from "next/image";
-import Link from "next/link";
-import React, { useEffect, useState } from "react";
-import { DatePicker } from "@heroui/date-picker";
+
+import React from "react";
+
 import "react-phone-number-input/style.css";
-import PhoneInput from "react-phone-number-input";
 import { InputOtp } from "@heroui/react";
 
 const page = () => {
@@ -38,10 +36,9 @@ const page = () => {
       </div>
 
       <div className="flex relative items-center justify-center h-screen flex-1">
-       
         <div className="flex-col flex lg:justify-start lg:items-start justify-center items-center z-20">
           <p className="text-sm text-center lg:text-left font-medium mb-20 w-[400px]">
-          Create  a 4 digit transaction pin to your wallet 
+            Create a 4 digit transaction pin to your wallet
           </p>
           <p className="mb-10 text-left">Enter Pin</p>
           <InputOtp
@@ -51,7 +48,7 @@ const page = () => {
             size="lg"
             width={200}
           />
-         
+
           <Button
             className="w-full h-14 mt-20 rounded-md bg-[#0A3C43] text-white"
             type="submit"
