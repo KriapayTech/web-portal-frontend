@@ -66,12 +66,12 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="bg-white flex-1 flex items-center lg:items-start px-20  lg:px-0  lg:pt-10 justify-center min-h-screen relative">
+      <div className="bg-white flex-1 flex items-center lg:items-start lg:px-0  lg:pt-10 justify-center min-h-screen relative">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="flex flex-col z-20 ">
-          <p className="text-[#0A3C43] w-[450px] font-medium text-2xl  lg:px-0 leading-9">
+          <p className="text-[#0A3C43]  font-medium text-2xl  lg:px-0 leading-9">
             Seamlessly transfer money across African countries...
           </p>
           <p className="text-sm font-medium mb-5 mt-2">
