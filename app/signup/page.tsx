@@ -1,22 +1,21 @@
 "use client";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { ChangeEvent, useState } from "react";
 import { DatePicker } from "@heroui/date-picker";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 
-const page = () => {
+const Page = () => {
   const [formData, setFormData] = useState({
     lastName: "",
     firstName: "",
     password: "",
     phoneNumber: "",
   });
-  const handleSignIn = (e: any) => {
+  const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     // Update form data
     setFormData((prev) => ({ ...prev, [name]: value }));
@@ -66,7 +65,7 @@ const page = () => {
         </div>
       </div>
 
-      <div className="bg-white flex-1 flex items-center lg:items-start px-8  lg:px-0  lg:pt-5 justify-center min-h-screen relative">
+      <div className="bg-white flex-1 flex items-center lg:items-start px-8  lg:px-0  lg:pt-10 justify-center min-h-screen relative">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
@@ -183,4 +182,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

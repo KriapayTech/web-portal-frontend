@@ -2,7 +2,7 @@
 import { RootState } from "@/Redux/store";
 import { Children } from "@/typings";
 import { usePathname, useRouter } from "next/navigation";
-import React, { ReactNode, useEffect } from "react";
+import React, { useEffect } from "react";
 import { useSelector } from "react-redux";
 
 const ProtectedRoute = ({ children }: Children) => {
@@ -12,11 +12,16 @@ const ProtectedRoute = ({ children }: Children) => {
 
   useEffect(() => {
     if (!loading) {
-      if (!user) {
-        router.push("/signup");
+      if (
+        !user &&
+        !pathName.includes("/login") &&
+        !user &&
+        !pathName.includes("/signup")
+      ) {
+        router.push("/login");
       }
     }
-  }, [user, router]);
+  }, [user, pathName, loading,router]);
 
   // if (loading) {
   //   return (
