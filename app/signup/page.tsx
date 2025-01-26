@@ -13,16 +13,10 @@ const Page = () => {
   const [formData, setFormData] = useState({
     lastName: "",
     firstName: "",
-    password: "",
+    email: "",
     phoneNumber: "",
     dateOfBirth: "",
   });
-  // const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
-  //   const { name, value } = e.target;
-  //   // Update form data
-  //   setFormData((prev) => ({ ...prev, [name]: `${value}` }));
-  //   // Validate inputs
-  // };
 
   const handleSignIn = (value: any, name: any): any => {
     setFormData((prevData: any) => ({
@@ -91,13 +85,14 @@ const Page = () => {
             Input your details to get started{" "}
           </p>
           <form className="space-y-4" onSubmit={handleSignInSubmit}>
-            <div className="space-y-1 h-14 mb-5 ">
+            <div className="space-y-1  ">
               <Label htmlFor="lastName" className="text-sm font-medium mb-5">
                 Last name
               </Label>
               <input
                 id="lastName"
                 type="text"
+                required
                 name="lastName"
                 value={formData.lastName}
                 className="w-full text-sm px-4 py-2 outline-none border-b-2 border-black  focus:ring-0 "
@@ -105,13 +100,14 @@ const Page = () => {
                 placeholder="Enter your last name "
               />
             </div>{" "}
-            <div className="space-y-1 h-14 pt-1 ">
+            <div className="space-y-1 ">
               <Label htmlFor="lastName" className="text-sm font-medium">
                 First name
               </Label>
               <input
                 id="firstName"
                 type="text"
+                required
                 name="firstName"
                 value={formData.firstName}
                 className="w-full text-sm px-4 py-2 outline-none border-b-2 border-black  focus:ring-0 "
@@ -119,13 +115,14 @@ const Page = () => {
                 placeholder="Enter your First name "
               />
             </div>{" "}
-            <div className="space-y-1 h-14 pt-3 ">
+            <div className="space-y-1  ">
               <Label htmlFor="lastName" className="text-sm font-medium mb-5">
                 DOB
               </Label>
               <DatePicker
                 className="bg-white border-b-2 border-black"
                 variant="underlined"
+                isRequired
                 value={
                   formData.dateOfBirth && formData.dateOfBirth !== ""
                     ? parseDate(formData.dateOfBirth)
@@ -133,8 +130,23 @@ const Page = () => {
                 }
                 onChange={(value) => handleSignIn(value, "dateOfBirth")}
               />
-            </div>{" "}
-            <div className="space-y-1 h-14 pt-5 ">
+            </div>
+            <div className="space-y-1   ">
+              <Label htmlFor="lastName" className="text-sm font-medium">
+                Email
+              </Label>
+              <input
+                id="email"
+                type="email"
+                required
+                name="email"
+                value={formData.email}
+                className="w-full text-sm px-4 py-2 outline-none border-b-2 border-black  focus:ring-0 "
+                onChange={(e) => handleSignIn(e.target.value, "email")}
+                placeholder="johndoe@gmail.com"
+              />
+            </div>
+            <div className="space-y-1 ">
               <Label htmlFor="lastName" className="text-sm font-medium mb-5">
                 Phone Number
               </Label>
@@ -145,25 +157,26 @@ const Page = () => {
                 defaultCountry="US"
                 value={formData.phoneNumber}
                 onChange={(value) => handleSignIn(value, "phoneNumber")}
-                // onChange={(value) =>
-                //   setFormData((prev) => ({
-                //     ...prev,
-                //     phoneNumber: value || "", // Fallback to an empty string if undefined
-                //   }))
-                // }
                 className="border-b-2 pb-2 border-black custom-phone-input "
               />
             </div>
-            <div className="lg:pt-10 pt-2 pb-5">
+            <div className=" pb-5">
               <Button
-                className="w-full h-14 mt-5 rounded-md bg-[#0A3C43] text-white"
+                disabled={
+                  !formData.email ||
+                  !formData.dateOfBirth ||
+                  !formData.firstName ||
+                  !formData.lastName ||
+                  formData.phoneNumber.length < 10
+                }
+                className="w-full h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
                 type="submit"
               >
                 Sign up
               </Button>
             </div>
           </form>
-          <div className="absolute bottom-0 sm:bottom-4 lg:bottom-7">
+          <div className="absolute bottom-4 lg:bottom-7">
             <p className="font-medium text-sm mb-5 ">
               Already have an account ?{" "}
               <Link href={"/login"}>
