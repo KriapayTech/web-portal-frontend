@@ -6,26 +6,30 @@ import Image from "next/image";
 import React, { useRef, useState } from "react";
 
 import "react-phone-number-input/style.css";
+
 import { InputOtp } from "@heroui/react";
-import { Toast } from "primereact/toast";
-import axios from "axios";
-import { useRouter } from "next/navigation";
-import { RootState } from "@/Redux/store";
 import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
+import axios from "axios";
+import { Toast } from "primereact/toast";
+import { useRouter } from "next/navigation";
 
 const page = () => {
-  const [transactionalPin, setTransactionalPin] = useState("");
-  const [pinLoading, setPinLoading] = useState(false);
+  const [otp, setOtp] = useState("");
   const { email } = useSelector((state: RootState) => state.user);
+  const [OTPLoading, setOTPLoading] = useState(false);
   const toast = useRef<Toast>(null);
   const router = useRouter();
-  const handleTransactionalPin = async () => {
-    setPinLoading(true);
+  const handleOTP = async () => {
+    setOTPLoading(true);
     try {
-      const res = await axios.patch("https://app.kriapay.com/auth/create-pin", {
-        email: email,
-        pin: transactionalPin,
-      });
+      const res = await axios.patch(
+        "https://app.kriapay.com/auth/login/otp",
+        {
+          email: email,
+          otp: otp,
+        }
+      );
       console.log(res);
       if (res.data.success) {
         toast.current?.show({
@@ -34,7 +38,7 @@ const page = () => {
           detail: res.data.success,
           life: 3000,
         });
-        router.push("/login/welcome-aboard");
+        router.push("/signup/create-password");
 
         // setOTPLoading(false);
       }
@@ -56,11 +60,11 @@ const page = () => {
           life: 3000,
         });
       }
-      setPinLoading(false);
+      setOTPLoading(false);
     }
   };
   return (
-    <div className="flex   h-screen ">
+    <div className="flex h-screen ">
       <Toast ref={toast} />
       {/* Left section with background */}
       <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden lg:flex flex-col hidden justify-between">
@@ -77,46 +81,54 @@ const page = () => {
         </div>
 
         <Image
-          src={"/shield.svg"}
-          alt="shield "
-          height={200}
-          width={200}
-          className="absolute bottom-10 left-0"
+          src={"/mailbox.svg"}
+          alt="hourglass logo"
+          height={400}
+          width={400}
+          className="mx-auto"
           priority
         />
       </div>
 
       <div className="flex relative items-center justify-center h-screen flex-1">
+        <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+        <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+        <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="flex-col flex lg:justify-start lg:items-start justify-center items-center z-20">
           <p className="text-sm text-center lg:text-left font-medium mb-20 w-[400px]">
-            Create a 4 digit transaction pin to your wallet
+            A 4 digit code has been sent to your email
           </p>
-          <p className="mb-10 text-left">Enter Pin</p>
+          <p className="mb-10 text-left">Enter code</p>
           <InputOtp
             length={4}
             variant="flat"
-            value={transactionalPin}
-            onValueChange={setTransactionalPin}
+            value={otp}
+            onValueChange={setOtp}
             className=""
             size="lg"
             width={200}
           />
-
+          <p className="mt-10 text-sm">
+            Didn’t receive any code?{" "}
+            <span onClick={handleOTP} className="text-green-500">
+              Resend
+            </span>{" "}
+          </p>
           <Button
-            onClick={handleTransactionalPin}
-            disabled={transactionalPin.length < 4 || pinLoading}
+            onClick={handleOTP}
+            disabled={otp.length < 6 || OTPLoading}
             className="w-full h-14 mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             type="submit"
           >
-            {pinLoading ? "Creating Pin" : "Verify"}
+            {OTPLoading ? "Verifying OTP" : "Verify"}
           </Button>
         </div>
         <Image
-          src={"/shield.svg"}
+          src={"/mailbox.svg"}
           alt="hourglass logo"
-          height={150}
-          width={150}
-          className="absolute left-0 bottom-10 lg:hidden  z-0"
+          height={300}
+          width={300}
+          className="absolute bottom-0 lg:hidden -left-20 z-0"
           priority
         />
       </div>

@@ -2,12 +2,23 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { setEmail, setToken, setUser } from "@/Redux/slices/userSlice";
+import axios from "axios";
+import { Eye, EyeClosed } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import { useRouter } from "next/navigation";
+import { Toast } from "primereact/toast";
+import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
+import { useDispatch } from "react-redux";
 
 const Page = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const toast = useRef<Toast>(null);
+  const router = useRouter();
+  const [signInLoading, setSignInLoading] = useState(false);
+  const dispatch = useDispatch();
+  const [isVisible, setIsVisible] = useState<boolean>(false);
 
   const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -15,12 +26,58 @@ const Page = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
     // Validate inputs
   };
-  const handleLoginSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleLoginSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log(formData);
+
+    setSignInLoading(true);
+
+    try {
+      const res = await axios.post(
+        "https://app.kriapay.com/auth/login",
+        formData
+      );
+      console.log(res);
+      if (res.data.success) {
+        toast.current?.show({
+          severity: "success",
+          summary: "Success",
+          detail: res.data.success,
+          life: 3000,
+        });
+        dispatch(setEmail(formData.email));
+        dispatch(setToken(res.data.kriapayToken));
+        dispatch(setUser(formData.email));
+        router.push("/");
+        setFormData({
+          email: "",
+          password: "",
+        });
+        setSignInLoading(false);
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response?.data?.error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: error.response?.data?.error || "An unexpected error occurred",
+          life: 3000,
+        });
+      } else {
+        console.log("Unexpected error:", error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "An unexpected error occurred",
+          life: 3000,
+        });
+      }
+      setSignInLoading(false);
+    }
   };
   return (
     <div className="flex h-screen ">
+      <Toast ref={toast} />
       {/* Left section with background */}
       <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden hidden lg:block">
         {/* Dark overlay */}
@@ -85,28 +142,38 @@ const Page = () => {
                 placeholder="johndoe@gmail.com"
               />
             </div>
-            <div className="space-y-2">
+            <div className="space-y-2 relative">
               <Label htmlFor="current">Password</Label>
               <Input
                 id="current"
-                type="password"
+                type={isVisible ? "text" : "password"}
                 name="password"
                 className="w-96 h-14 rounded-lg  outline-none border-[1px] border-black focus:border-none focus:outline-none"
                 value={formData.password}
                 onChange={handleSignIn}
               />
+              <button
+                type="button"
+                className="absolute right-3 top-10 text-gray-600"
+                onClick={() => setIsVisible(!isVisible)}
+              >
+                {isVisible ? <EyeClosed /> : <Eye />}
+              </button>
             </div>
             <div className="lg:pt-10 pt-8">
               <p className="font-medium text-sm ">
                 Forgot Password ?{" "}
                 <span className="text-green-600  mb-5">Reset Here</span>
               </p>
+
               <Button
-                disabled={!formData.password || !formData.email}
+                disabled={
+                  !formData.password || !formData.email || signInLoading
+                }
                 className="w-96 h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
                 type="submit"
               >
-                Login
+                {signInLoading ? "Logging you in " : "Log in"}
               </Button>
             </div>
           </form>

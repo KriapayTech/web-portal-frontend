@@ -6,6 +6,7 @@ export interface CounterState {
   loading: boolean;
   error: any;
   email: string;
+  token: string | null;
 }
 
 const initialState: CounterState = {
@@ -13,6 +14,7 @@ const initialState: CounterState = {
   loading: false,
   error: null,
   email: "",
+  token: null,
 };
 
 export const counterSlice = createSlice({
@@ -22,10 +24,16 @@ export const counterSlice = createSlice({
     setEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
     },
+    setUser: (state, action: PayloadAction<string>) => {
+      state.user = action.payload;
+    },
+    setToken: (state, action: PayloadAction<string>) => {
+      state.token = action.payload;
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { setEmail } = counterSlice.actions;
+export const { setEmail, setToken,setUser } = counterSlice.actions;
 
 export default counterSlice.reducer;

@@ -1,10 +1,10 @@
 "use client";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
+import Link from "next/link";
 import React from "react";
 
 const Page = () => {
- 
   return (
     <div className="flex h-screen ">
       {/* Left section with background */}
@@ -58,12 +58,15 @@ const Page = () => {
           <p className="text-sm font-medium mt-2">
             Let’s get you signed in with your new credentials
           </p>
-          <Button
-            className="w-96 h-14 mt-52 lg:mt-20 rounded-md bg-[#0A3C43] text-white"
-            type="submit"
-          >
-            Get started
-          </Button>
+          <Link href={"/login"}>
+            <Button
+              className="w-96 h-14 mt-52 lg:mt-20 rounded-md bg-[#0A3C43] text-white"
+              type="submit"
+            >
+              Sign in to get started
+            </Button>
+          </Link>
+
           <div className="absolute bottom-5">
             <p className="font-medium text-sm pr-4">
               {" "}
