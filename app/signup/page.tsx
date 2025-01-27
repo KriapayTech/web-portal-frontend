@@ -3,20 +3,33 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
-import React, { ChangeEvent, FormEvent, useState } from "react";
+import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { DatePicker } from "@heroui/date-picker";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { parseDate } from "@internationalized/date";
+import axios from "axios";
+import { useToast } from "@/hooks/use-toast";
+import { Toast } from "primereact/toast";
+import { useRouter } from "next/navigation";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
+import { setEmail } from "@/Redux/slices/userSlice";
 
 const Page = () => {
   const [formData, setFormData] = useState({
-    lastName: "",
     firstName: "",
-    email: "",
+    lastName: "",
     phoneNumber: "",
-    dateOfBirth: "",
+    email: "",
+    dateOfbirth: "",
+    countryOfResidence: "Nigeria",
+    defaultCurrency: "ngn",
   });
+  const toast = useRef<Toast>(null);
+  const router = useRouter();
+  const [signInLoading, setSignInLoading] = useState(false);
+  const dispatch = useDispatch();
 
   const handleSignIn = (value: any, name: any): any => {
     setFormData((prevData: any) => ({
@@ -24,13 +37,61 @@ const Page = () => {
       [name]: `${value}`,
     }));
   };
-  const handleSignInSubmit = (e: FormEvent<HTMLFormElement>) => {
+  const handleSignInSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-  try
+    setSignInLoading(true);
+
+    try {
+      const res = await axios.post(
+        "https://app.kriapay.com/auth/signup",
+        formData
+      );
+      console.log(res);
+      if (res.data.success) {
+        toast.current?.show({
+          severity: "success",
+          summary: "Success",
+          detail: res.data.success,
+          life: 3000,
+        });
+        dispatch(setEmail(formData.email));
+        router.push("/signup/OTP");
+        setFormData({
+          firstName: "",
+          lastName: "",
+          phoneNumber: "",
+          email: "",
+          dateOfbirth: "",
+          countryOfResidence: "Nigeria",
+          defaultCurrency: "ngn",
+        });
+        setSignInLoading(false);
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response?.data?.error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: error.response?.data?.error || "An unexpected error occurred",
+          life: 3000,
+        });
+      } else {
+        console.log("Unexpected error:", error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "An unexpected error occurred",
+          life: 3000,
+        });
+      }
+      setSignInLoading(false);
+    }
   };
 
   return (
     <div className="flex h-screen ">
+      <Toast ref={toast} />
       {/* Left section with background */}
       <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden hidden lg:block">
         {/* Dark overlay */}
@@ -124,11 +185,11 @@ const Page = () => {
                 variant="underlined"
                 isRequired
                 value={
-                  formData.dateOfBirth && formData.dateOfBirth !== ""
-                    ? parseDate(formData.dateOfBirth)
+                  formData.dateOfbirth && formData.dateOfbirth !== ""
+                    ? parseDate(formData.dateOfbirth)
                     : null
                 }
-                onChange={(value) => handleSignIn(value, "dateOfBirth")}
+                onChange={(value) => handleSignIn(value, "dateOfbirth")}
               />
             </div>
             <div className="space-y-1   ">
@@ -164,7 +225,8 @@ const Page = () => {
               <Button
                 disabled={
                   !formData.email ||
-                  !formData.dateOfBirth ||
+                  !formData.dateOfbirth ||
+                  signInLoading ||
                   !formData.firstName ||
                   !formData.lastName ||
                   formData.phoneNumber.length < 10
@@ -172,7 +234,7 @@ const Page = () => {
                 className="w-full h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
                 type="submit"
               >
-                Sign up
+                {signInLoading ? "Signing you in " : "Sign in"}
               </Button>
             </div>
           </form>

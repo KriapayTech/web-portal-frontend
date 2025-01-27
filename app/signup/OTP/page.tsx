@@ -8,11 +8,23 @@ import React, { useState } from "react";
 import "react-phone-number-input/style.css";
 
 import { InputOtp } from "@heroui/react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
+import axios from "axios";
 
 const page = () => {
   const [otp, setOtp] = useState("");
-  const handleOTP = () => {
-    console.log(otp);
+  const { email } = useSelector((state: RootState) => state.user);
+  console.log(email);
+  const handleOTP = async() => {
+ try {
+  const res = await axios.post(
+    "https://app.kriapay.com/auth/verify-account-otp",
+    formData
+  );
+ } catch (error) {
+  
+ }
   };
   return (
     <div className="flex   h-screen ">
@@ -62,8 +74,8 @@ const page = () => {
             Didn’t receive any code?{" "}
             <span className="text-green-500">Resend</span>{" "}
           </p>
-          <Button 
-          onClick={handleOTP}
+          <Button
+            onClick={handleOTP}
             disabled={otp.length < 6}
             className="w-full h-14 mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             type="submit"

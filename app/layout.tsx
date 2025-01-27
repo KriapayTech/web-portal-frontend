@@ -7,7 +7,10 @@ import { persistor, store } from "@/Redux/store";
 import Header from "../components/Header";
 import { PersistGate } from "redux-persist/integration/react";
 import ProtectedRoute from "@/components/ProtectedRoute";
-import {HeroUIProvider} from '@heroui/react'
+import { HeroUIProvider } from "@heroui/react";
+import { Toaster } from "@/components/ui/toaster";
+import { PrimeReactProvider } from "primereact/api";
+import "primereact/resources/themes/lara-light-cyan/theme.css";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -27,9 +30,12 @@ export default function RootLayout({
         <Provider store={store}>
           <PersistGate loading={null} persistor={persistor}>
             <ProtectedRoute>
-            <HeroUIProvider>
-              <Header />
-              {children}
+              <HeroUIProvider>
+                <PrimeReactProvider>
+                  <Header />
+                  <Toaster />
+                  {children}
+                </PrimeReactProvider>
               </HeroUIProvider>
             </ProtectedRoute>
           </PersistGate>
