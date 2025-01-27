@@ -20,7 +20,6 @@ const page = () => {
   const [OTPLoading, setOTPLoading] = useState(false);
   const toast = useRef<Toast>(null);
   const router = useRouter();
-  console.log(email);
   const handleOTP = async () => {
     setOTPLoading(true);
     try {
@@ -41,7 +40,7 @@ const page = () => {
         });
         router.push("/signup/create-password");
 
-        setOTPLoading(false);
+        // setOTPLoading(false);
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -121,7 +120,7 @@ const page = () => {
             className="w-full h-14 mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             type="submit"
           >
-            Verify
+            {OTPLoading ? "Verifying OTP" : "Verify"}
           </Button>
         </div>
         <Image
