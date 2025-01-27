@@ -3,15 +3,65 @@ import { Button } from "@/components/ui/button";
 
 import Image from "next/image";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import "react-phone-number-input/style.css";
 import { InputOtp } from "@heroui/react";
+import { Toast } from "primereact/toast";
+import axios from "axios";
+import { useRouter } from "next/navigation";
+import { RootState } from "@/Redux/store";
+import { useSelector } from "react-redux";
 
 const page = () => {
   const [transactionalPin, setTransactionalPin] = useState("");
+  const [pinLoading, setPinLoading] = useState(false);
+  const { email } = useSelector((state: RootState) => state.user);
+  const toast = useRef<Toast>(null);
+  const router = useRouter();
+  const handleTransactionalPin = async () => {
+    setPinLoading(true);
+    try {
+      const res = await axios.patch("https://app.kriapay.com/auth/create-pin", {
+        email: email,
+        pin: transactionalPin,
+      });
+      console.log(res);
+      if (res.data.success) {
+        toast.current?.show({
+          severity: "success",
+          summary: "Success",
+          detail: res.data.success,
+          life: 3000,
+        });
+        router.push("/signup/create-password");
+
+        // setOTPLoading(false);
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response?.data?.error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: error.response?.data?.error || "An unexpected error occurred",
+          life: 3000,
+        });
+      } else {
+        console.log("Unexpected error:", error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "An unexpected error occurred",
+          life: 3000,
+        });
+      }
+      setPinLoading(false);
+    }
+  };
   return (
     <div className="flex   h-screen ">
+      <Toast ref={toast} />
       {/* Left section with background */}
       <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden lg:flex flex-col hidden justify-between">
         {/* Dark overlay */}
@@ -53,10 +103,12 @@ const page = () => {
           />
 
           <Button
-            className="w-full h-14 mt-20 rounded-md bg-[#0A3C43] text-white"
+            onClick={handleTransactionalPin}
+            disabled={transactionalPin.length < 4 || pinLoading}
+            className="w-full h-14 mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             type="submit"
           >
-            Verify
+            {pinLoading ? "Creating Pin" : "Verify"}
           </Button>
         </div>
         <Image

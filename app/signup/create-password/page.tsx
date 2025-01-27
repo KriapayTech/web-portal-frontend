@@ -6,6 +6,8 @@ import Image from "next/image";
 import React, { useState, ChangeEvent, useRef } from "react";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
 
 const PasswordCreationPage: React.FC = () => {
   const [password, setPassword] = useState<string>("");
@@ -14,6 +16,7 @@ const PasswordCreationPage: React.FC = () => {
   const [passwordLoading, setPassowrdLoading] = useState(false);
   const toast = useRef<Toast>(null);
   const router = useRouter();
+  const { email } = useSelector((state: RootState) => state.user);
 
   // Validation Criteria
   const validations: { label: string; test: (pw: string) => boolean }[] = [
@@ -43,7 +46,7 @@ const PasswordCreationPage: React.FC = () => {
       const res = await axios.patch(
         "https://app.kriapay.com/auth/create-password",
         {
-          email: "chibokaxavier@gmail.com",
+          email: email,
           password: password,
           confirmPassword: confirmPassword,
         }
