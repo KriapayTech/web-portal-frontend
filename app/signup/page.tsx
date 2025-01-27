@@ -91,7 +91,6 @@ const Page = () => {
 
   return (
     <div className="flex h-screen ">
-      <Toast ref={toast} />
       {/* Left section with background */}
       <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden hidden lg:block">
         {/* Dark overlay */}
@@ -273,6 +272,7 @@ const Page = () => {
           priority
         />
       </div>
+      <Toast ref={toast} />
     </div>
   );
 };

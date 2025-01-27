@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button";
 
 import Image from "next/image";
 
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 
 import "react-phone-number-input/style.css";
 
@@ -11,23 +11,62 @@ import { InputOtp } from "@heroui/react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
 import axios from "axios";
+import { Toast } from "primereact/toast";
+import { useRouter } from "next/navigation";
 
 const page = () => {
   const [otp, setOtp] = useState("");
   const { email } = useSelector((state: RootState) => state.user);
+  const [OTPLoading, setOTPLoading] = useState(false);
+  const toast = useRef<Toast>(null);
+  const router = useRouter();
   console.log(email);
-  const handleOTP = async() => {
- try {
-  const res = await axios.post(
-    "https://app.kriapay.com/auth/verify-account-otp",
-    formData
-  );
- } catch (error) {
-  
- }
+  const handleOTP = async () => {
+    setOTPLoading(true);
+    try {
+      const res = await axios.patch(
+        "https://app.kriapay.com/auth/verify-account-otp",
+        {
+          email: email,
+          otp: otp,
+        }
+      );
+      console.log(res);
+      if (res.data.success) {
+        toast.current?.show({
+          severity: "success",
+          summary: "Success",
+          detail: res.data.success,
+          life: 3000,
+        });
+        router.push("/signup/create-password");
+
+        setOTPLoading(false);
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response?.data?.error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: error.response?.data?.error || "An unexpected error occurred",
+          life: 3000,
+        });
+      } else {
+        console.log("Unexpected error:", error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "An unexpected error occurred",
+          life: 3000,
+        });
+      }
+      setOTPLoading(false);
+    }
   };
   return (
-    <div className="flex   h-screen ">
+    <div className="flex h-screen ">
+      <Toast ref={toast} />
       {/* Left section with background */}
       <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden lg:flex flex-col hidden justify-between">
         {/* Dark overlay */}
@@ -72,11 +111,13 @@ const page = () => {
           />
           <p className="mt-10 text-sm">
             Didn’t receive any code?{" "}
-            <span className="text-green-500">Resend</span>{" "}
+            <span onClick={handleOTP} className="text-green-500">
+              Resend
+            </span>{" "}
           </p>
           <Button
             onClick={handleOTP}
-            disabled={otp.length < 6}
+            disabled={otp.length < 6 || OTPLoading}
             className="w-full h-14 mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             type="submit"
           >
