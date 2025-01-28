@@ -16,7 +16,7 @@ const Page = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const toast = useRef<Toast>(null);
   const router = useRouter();
-  const [signInLoading, setSignInLoading] = useState(false);
+  const [resetPasswordLoading, setResetPasswordLoading] = useState(false);
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
 
@@ -26,10 +26,10 @@ const Page = () => {
     setFormData((prev) => ({ ...prev, [name]: value }));
     // Validate inputs
   };
-  const handleLoginSubmit = async (e: FormEvent<HTMLFormElement>) => {
+  const handleResetPassword = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    setSignInLoading(true);
+    setResetPasswordLoading(true);
 
     try {
       const res = await axios.post(
@@ -45,14 +45,12 @@ const Page = () => {
           life: 3000,
         });
         dispatch(setEmail(formData.email));
-        dispatch(setToken(res.data.kriapayToken));
-        dispatch(setUser(formData.email));
         router.push("/");
         setFormData({
           email: "",
           password: "",
         });
-        setSignInLoading(false);
+        setResetPasswordLoading(false);
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -72,7 +70,7 @@ const Page = () => {
           life: 3000,
         });
       }
-      setSignInLoading(false);
+      setResetPasswordLoading(false);
     }
   };
   return (
@@ -84,15 +82,7 @@ const Page = () => {
         <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
         <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
         <div className="absolute inset-0 bg-[#0A3C43] opacity-20 z-10"></div>
-        <div className="relative mt-10 ml-10 z-20">
-          <Image
-            src={"/krialogo.svg"}
-            alt="Kria logo"
-            height={100}
-            width={100}
-            priority
-          />
-        </div>
+        <div className="relative mt-10 ml-10 z-20"></div>
         <Image
           src={"/hourglass.svg"}
           alt="hourglass logo"
@@ -110,9 +100,13 @@ const Page = () => {
           priority
         />
         <div className="absolute bottom-20 left-0 w-full flex items-center justify-center flex-col mb-5 z-20">
-          <p className="text-3xl font-medium text-white">
-            Pay less to send more.
-          </p>
+          <Image
+            src={"/krialogo.svg"}
+            alt="Kria logo"
+            height={100}
+            width={100}
+            priority
+          />
           <p className="text-sm w-[323px] mt-10 font-medium text-center text-white">
             Your money deserves better. Send money internationally with the
             lowest transaction fees.
@@ -120,16 +114,19 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="bg-white flex-1 flex items-center lg:items-start px-5  lg:px-0  lg:pt-28 justify-center min-h-screen relative">
+      <div className="bg-white flex-1 flex items-center  px-5  lg:px-0  lg:pt-10 justify-center min-h-screen relative">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="flex flex-col z-20 ">
-          <p className="text-[#0A3C43] font-medium text-2xl  lg:px-0 leading-9">
-            Hello,
+          <p className="text-[#0A3C43] font-medium text-2xl mb-5  lg:px-0 leading-9">
+            Reset your password,
           </p>
-          <p className="text-sm font-medium mb-5">Sign in to get started</p>
-          <form className="space-y-4 mt-4 " onSubmit={handleLoginSubmit}>
+          <p className="text-sm font-medium mb-5">
+            Kindly put in your email address to receive your otp. A 6 digit code
+            would sent to this email.
+          </p>
+          <form className="space-y-4 mt-4 " onSubmit={handleResetPassword}>
             <div className="space-y-2">
               <Label htmlFor="email">Email address</Label>
               <Input
@@ -142,60 +139,17 @@ const Page = () => {
                 placeholder="johndoe@gmail.com"
               />
             </div>
-            <div className="space-y-2 relative">
-              <Label htmlFor="current">Password</Label>
-              <Input
-                id="current"
-                type={isVisible ? "text" : "password"}
-                name="password"
-                className="w-96 h-14 rounded-lg  outline-none border-[1px] border-black focus:border-none focus:outline-none"
-                value={formData.password}
-                onChange={handleSignIn}
-              />
-              <button
-                type="button"
-                className="absolute right-3 top-10 text-gray-600"
-                onClick={() => setIsVisible(!isVisible)}
-              >
-                {isVisible ? <EyeClosed /> : <Eye />}
-              </button>
-            </div>
-            <div className="lg:pt-10 pt-8">
-              <p className="font-medium text-sm ">
-                Forgot Password ?{" "}
-                <Link href={'/reset-password'}>
-                <span className="text-green-600  mb-5">Reset Here</span>
-                </Link>
-              
-              </p>
 
+            <div className="lg:pt-10 pt-8">
               <Button
-                disabled={
-                  !formData.password || !formData.email || signInLoading
-                }
+                disabled={!formData.email || resetPasswordLoading}
                 className="w-96 h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
                 type="submit"
               >
-                {signInLoading ? "Logging you in " : "Log in"}
+                {resetPasswordLoading ? "Loading... " : "Next"}
               </Button>
             </div>
           </form>
-          <div className="absolute bottom-5">
-            <p className="font-medium text-sm mb-5 ">
-              New here?{" "}
-              <Link href={"/signup"}>
-                {" "}
-                <span className="text-green-600">Create account</span>
-              </Link>
-            </p>{" "}
-            <p className="font-medium text-sm">
-              {" "}
-              © 2024 Kria Technologies Ltd. All rights reserved.{" "}
-              <span className="text-green-600 underline">
-                Terms & Conditions Privacy Policies
-              </span>
-            </p>
-          </div>
         </div>
         <Image
           src={"/hourglass.svg"}
