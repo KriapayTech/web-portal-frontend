@@ -188,7 +188,7 @@ const Page = () => {
                 <span className="text-green-600">Create account</span>
               </Link>
             </p>{" "}
-            <p className="font-medium text-sm">
+            <p className="font-medium text-sm pr-5">
               {" "}
               © 2024 Kria Technologies Ltd. All rights reserved.{" "}
               <span className="text-green-600 underline">
