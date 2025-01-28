@@ -33,10 +33,12 @@ export default function RootLayout({
             <ProtectedRoute>
               <HeroUIProvider>
                 <PrimeReactProvider>
-                  <Header />
                   <Toaster />
                   <div className="flex">
-                    <Sidebar /> {children}
+                    <Sidebar />
+                    <div className="">
+                      <Header /> {children}
+                    </div>
                   </div>
                 </PrimeReactProvider>
               </HeroUIProvider>
