@@ -247,12 +247,12 @@ const Page = () => {
                 className="w-full h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
                 type="submit"
               >
-                {signInLoading ? "Signing you in " : "Sign in"}
+                {signInLoading ? "Signing you up " : "Sign up"}
               </Button>
             </div>
           </form>
           <div className="absolute bottom-4 lg:bottom-7">
-            <p className="font-medium text-sm mb-5 ">
+            <p className="font-medium text-sm mb-5 mt-4 ">
               Already have an account ?{" "}
               <Link href={"/login"}>
                 {" "}
