@@ -16,7 +16,7 @@ import { useRouter } from "next/navigation";
 import { Input } from "@/components/ui/input";
 import { Eye, EyeClosed } from "lucide-react";
 
-const page = () => {
+const Page = () => {
   const [otp, setOtp] = useState("");
   const { email } = useSelector((state: RootState) => state.user);
   const [password, setPassword] = useState("");
@@ -35,7 +35,7 @@ const page = () => {
     },
   ];
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
+    const {  value } = e.target;
     setPassword(value);
   };
   const handleOTP = async () => {
@@ -196,4 +196,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

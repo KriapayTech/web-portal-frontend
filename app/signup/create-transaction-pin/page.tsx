@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 import { RootState } from "@/Redux/store";
 import { useSelector } from "react-redux";
 
-const page = () => {
+const Page = () => {
   const [transactionalPin, setTransactionalPin] = useState("");
   const [pinLoading, setPinLoading] = useState(false);
   const { email } = useSelector((state: RootState) => state.user);
@@ -124,4 +124,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

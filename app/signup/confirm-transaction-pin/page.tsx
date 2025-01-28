@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import "react-phone-number-input/style.css";
 import { InputOtp } from "@heroui/react";
 
-const page = () => {
+const Page = () => {
   const [transactionalPin, setTransactionalPin] = useState("");
   return (
     <div className="flex   h-screen ">
@@ -69,4 +69,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

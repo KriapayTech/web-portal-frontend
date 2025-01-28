@@ -14,7 +14,7 @@ import axios from "axios";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const [otp, setOtp] = useState("");
   const { email } = useSelector((state: RootState) => state.user);
   const [OTPLoading, setOTPLoading] = useState(false);
@@ -136,4 +136,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

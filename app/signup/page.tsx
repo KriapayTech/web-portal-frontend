@@ -3,18 +3,27 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import Image from "next/image";
 import Link from "next/link";
-import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
+import React, { FormEvent, useRef, useState } from "react";
 import { DatePicker } from "@heroui/date-picker";
 import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 import { parseDate } from "@internationalized/date";
 import axios from "axios";
-import { useToast } from "@/hooks/use-toast";
 import { Toast } from "primereact/toast";
 import { useRouter } from "next/navigation";
-import { useDispatch, useSelector } from "react-redux";
-import { RootState } from "@/Redux/store";
+import { useDispatch } from "react-redux";
 import { setEmail } from "@/Redux/slices/userSlice";
+
+type E164Number = string;
+type FormData = {
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: E164Number | string;
+  dateOfbirth: string;
+  countryOfResidence: string;
+  defaultCurrency: string;
+};
 
 const Page = () => {
   const [formData, setFormData] = useState({
@@ -31,8 +40,8 @@ const Page = () => {
   const [signInLoading, setSignInLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleSignIn = (value: any, name: any): any => {
-    setFormData((prevData: any) => ({
+  const handleSignIn = (value: string, name: keyof FormData): void => {
+    setFormData((prevData: FormData) => ({
       ...prevData,
       [name]: `${value}`,
     }));
@@ -40,6 +49,7 @@ const Page = () => {
   const handleSignInSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSignInLoading(true);
+    console.log(formData);
 
     try {
       const res = await axios.post(
@@ -188,6 +198,7 @@ const Page = () => {
                     ? parseDate(formData.dateOfbirth)
                     : null
                 }
+                //@ts-expect-error type error
                 onChange={(value) => handleSignIn(value, "dateOfbirth")}
               />
             </div>
@@ -216,6 +227,7 @@ const Page = () => {
                 withCountryCallingCode
                 defaultCountry="US"
                 value={formData.phoneNumber}
+                //@ts-expect-error type error
                 onChange={(value) => handleSignIn(value, "phoneNumber")}
                 className="border-b-2 pb-2 border-black custom-phone-input "
               />

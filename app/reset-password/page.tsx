@@ -2,11 +2,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { setEmail, setToken, setUser } from "@/Redux/slices/userSlice";
+import { setEmail } from "@/Redux/slices/userSlice";
 import axios from "axios";
-import { Eye, EyeClosed } from "lucide-react";
 import Image from "next/image";
-import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Toast } from "primereact/toast";
 import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
@@ -18,7 +16,7 @@ const Page = () => {
   const router = useRouter();
   const [resetPasswordLoading, setResetPasswordLoading] = useState(false);
   const dispatch = useDispatch();
-  const [isVisible, setIsVisible] = useState<boolean>(false);
+
 
   const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
