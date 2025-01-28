@@ -1,13 +1,22 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import axios from "axios";
 import { Eye, EyeClosed } from "lucide-react";
 import Image from "next/image";
-import React, { useState, ChangeEvent } from "react";
+import React, { useState, ChangeEvent, useRef } from "react";
+import { Toast } from "primereact/toast";
+import { useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { RootState } from "@/Redux/store";
 
 const PasswordCreationPage: React.FC = () => {
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const [passwordLoading, setPassowrdLoading] = useState(false);
+  const toast = useRef<Toast>(null);
+  const router = useRouter();
+  const { email } = useSelector((state: RootState) => state.user);
 
   // Validation Criteria
   const validations: { label: string; test: (pw: string) => boolean }[] = [
@@ -31,8 +40,52 @@ const PasswordCreationPage: React.FC = () => {
     setConfirmPassword(e.target.value);
   };
 
+  const handlePasswordSubmit = async () => {
+    setPassowrdLoading(true);
+    try {
+      const res = await axios.patch(
+        "https://app.kriapay.com/auth/create-password",
+        {
+          email: email,
+          password: password,
+          confirmPassword: confirmPassword,
+        }
+      );
+      console.log(res);
+      if (res.data.success) {
+        toast.current?.show({
+          severity: "success",
+          summary: "Success",
+          detail: res.data.success,
+          life: 3000,
+        });
+        router.push("/signup/create-transaction-pin");
+        // setPassowrdLoading(false);
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response?.data?.error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: error.response?.data?.error || "An unexpected error occurred",
+          life: 3000,
+        });
+      } else {
+        console.log("Unexpected error:", error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "An unexpected error occurred",
+          life: 3000,
+        });
+      }
+      setPassowrdLoading(false);
+    }
+  };
   return (
     <div className="flex h-screen">
+      <Toast ref={toast} />
       <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden lg:flex flex-col hidden justify-between">
         {/* Dark overlay */}
 
@@ -141,24 +194,26 @@ const PasswordCreationPage: React.FC = () => {
           </p>
           {/* Submit Button */}
           <Button
+            onClick={handlePasswordSubmit}
             className="w-full h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             disabled={
               !password ||
+              passwordLoading ||
               password !== confirmPassword ||
               !validations.every((validation) => validation.test(password))
             }
           >
-             Next
+            {passwordLoading ? "Loading..." : "Next"}
           </Button>
         </div>
-         <Image
-                  src={"/shield.svg"}
-                  alt="hourglass logo"
-                  height={200}
-                  width={200}
-                  className="absolute bottom-10 lg:hidden left-0 z-0"
-                  priority
-                />
+        <Image
+          src={"/shield.svg"}
+          alt="hourglass logo"
+          height={200}
+          width={200}
+          className="absolute bottom-10 lg:hidden left-0 z-0"
+          priority
+        />
       </div>
     </div>
   );
