@@ -239,6 +239,8 @@ const Page = () => {
                   !formData.dateOfbirth ||
                   signInLoading ||
                   !formData.firstName ||
+                  formData.firstName.length < 3 ||
+                  formData.lastName.length < 3 ||
                   !formData.lastName ||
                   formData.phoneNumber.length < 10
                 }
