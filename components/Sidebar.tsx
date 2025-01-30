@@ -8,9 +8,19 @@ import {
   Wallet,
 } from "lucide-react";
 import Image from "next/image";
+import { usePathname } from "next/navigation";
 import React from "react";
 
 const Sidebar = () => {
+  const pathname = usePathname();
+    const isHeaderExcluded =
+      pathname.includes("/login") ||
+      pathname.includes("/signup") ||
+      pathname.includes("/reset-password");
+  
+    if (isHeaderExcluded) {
+      return null;
+    }
   return (
     <div className="bg-[#0A3C43] w-1/4 relative overflow-hidden hidden lg:block h-screen">
       {/* Dark overlay */}
