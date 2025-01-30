@@ -63,7 +63,7 @@ const Page = () => {
     <div className="flex   h-screen ">
       <Toast ref={toast} />
       {/* Left section with background */}
-      <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden lg:flex flex-col hidden justify-between">
+      <div className="bg-[#0A3C43] w-[30vw] relative overflow-hidden lg:flex flex-col hidden justify-between">
         {/* Dark overlay */}
 
         <div className="relative mt-10 ml-10 z-20">
@@ -86,12 +86,13 @@ const Page = () => {
         />
       </div>
 
-      <div className="flex relative items-center justify-center h-screen flex-1">
-        <div className="flex-col flex lg:justify-start lg:items-start justify-center items-center z-20">
-          <p className="text-sm text-center lg:text-left font-medium mb-20 w-[400px]">
+      <div className="flex relative items-center tracking-[-0.5] w-[100vw] lg:w-[70vw] px-4 justify-center h-screen flex-1">
+        <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+        <div className="flex-col flex lg:justify-start lg:items-start justify-center items-center  z-20">
+          <p className="text-lg text-center lg:text-left  font-medium mb-10">
             Create a 4 digit transaction pin to your wallet
           </p>
-          <p className="mb-10 text-left">Enter Pin</p>
+          <p className="mb-10 font-semibold text-left">Enter Pin</p>
           <InputOtp
             length={4}
             variant="flat"
@@ -105,7 +106,7 @@ const Page = () => {
           <Button
             onClick={handleTransactionalPin}
             disabled={transactionalPin.length < 4 || pinLoading}
-            className="w-full h-14 mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+            className="w-full h-[50px] mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             type="submit"
           >
             {pinLoading ? "Creating Pin" : "Verify"}

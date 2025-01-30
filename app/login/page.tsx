@@ -79,20 +79,14 @@ const Page = () => {
     <div className="flex h-screen ">
       <Toast ref={toast} />
       {/* Left section with background */}
-      <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden hidden lg:block">
+      <div className="bg-[#0A3C43] w-[30vw] relative overflow-hidden hidden lg:block">
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
         <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
+        <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>
+        <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-[#0A3C43] opacity-20 z-10"></div>
-        <div className="relative mt-10 ml-10 z-20">
-          <Image
-            src={"/krialogo.svg"}
-            alt="Kria logo"
-            height={100}
-            width={100}
-            priority
-          />
-        </div>
+        <div className="relative mt-10 ml-10 z-20"></div>
         <Image
           src={"/hourglass.svg"}
           alt="hourglass logo"
@@ -110,9 +104,13 @@ const Page = () => {
           priority
         />
         <div className="absolute bottom-20 left-0 w-full flex items-center justify-center flex-col mb-5 z-20">
-          <p className="text-3xl font-medium text-white">
-            Pay less to send more.
-          </p>
+          <Image
+            src={"/krialogo.svg"}
+            alt="Kria logo"
+            height={100}
+            width={100}
+            priority
+          />
           <p className="text-sm w-[323px] mt-10 font-medium text-center text-white">
             Your money deserves better. Send money internationally with the
             lowest transaction fees.
@@ -120,18 +118,22 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="bg-white flex-1 flex items-center lg:items-start px-5  lg:px-0  lg:pt-28 justify-center min-h-screen relative">
+      <div className="bg-white flex-1 flex items-center w-[100vw] lg:w-[70vw] lg:items-start px-5 tracking-[-1]   lg:px-0  lg:pt-28 justify-center min-h-screen relative">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="flex flex-col z-20 ">
-          <p className="text-[#0A3C43] font-medium text-2xl  lg:px-0 leading-9">
+          <p className="text-[#0A3C43] tracking-[-1] font-medium text-[25px]  lg:px-0 leading-9">
             Hello,
           </p>
-          <p className="text-sm font-medium mb-5">Sign in to get started</p>
+          <p className="text-sm font-medium mb-5 tracking-[-1]  leading-[18px]">
+            Sign in to get started
+          </p>
           <form className="space-y-4 mt-4 " onSubmit={handleLoginSubmit}>
             <div className="space-y-2">
-              <Label htmlFor="email">Email address</Label>
+              <Label htmlFor="email" className="tracking-[-1]">
+                Email Address
+              </Label>
               <Input
                 id="email"
                 type="email"
@@ -154,26 +156,25 @@ const Page = () => {
               />
               <button
                 type="button"
-                className="absolute right-3 top-10 text-gray-600"
+                className="absolute right-3 top-12 text-gray-600"
                 onClick={() => setIsVisible(!isVisible)}
               >
-                {isVisible ? <EyeClosed /> : <Eye />}
+                {isVisible ? <EyeClosed className="size-[13px]" /> : <Eye className="size-[13px]" />}
               </button>
             </div>
-            <div className="lg:pt-10 pt-8">
+            <div className="lg:pt-10 tracking-[-1]  pt-8">
               <p className="font-medium text-sm ">
                 Forgot Password ?{" "}
-                <Link href={'/reset-password'}>
-                <span className="text-green-600  mb-5">Reset Here</span>
+                <Link href={"/reset-password"}>
+                  <span className="text-green-600  mb-5">Reset Here</span>
                 </Link>
-              
               </p>
 
               <Button
                 disabled={
                   !formData.password || !formData.email || signInLoading
                 }
-                className="w-96 h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+                className="w-96 h-[50px] mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
                 type="submit"
               >
                 {signInLoading ? "Logging you in " : "Log in"}
@@ -181,14 +182,14 @@ const Page = () => {
             </div>
           </form>
           <div className="absolute bottom-5">
-            <p className="font-medium text-sm mb-5 ">
+            <p className="font-medium text-sm mb-5 tracking-[-1] ">
               New here?{" "}
               <Link href={"/signup"}>
                 {" "}
                 <span className="text-green-600">Create account</span>
               </Link>
             </p>{" "}
-            <p className="font-medium text-sm pr-5">
+            <p className="font-medium text-sm  tracking-[-1] pr-5">
               {" "}
               © 2024 Kria Technologies Ltd. All rights reserved.{" "}
               <span className="text-green-600 underline">

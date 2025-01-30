@@ -67,7 +67,7 @@ const Page = () => {
     <div className="flex h-screen ">
       <Toast ref={toast} />
       {/* Left section with background */}
-      <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden lg:flex flex-col hidden justify-between">
+      <div className="bg-[#0A3C43] w-[30vw] relative overflow-hidden lg:flex flex-col hidden justify-between">
         {/* Dark overlay */}
 
         <div className="relative mt-10 ml-10 z-20">
@@ -90,7 +90,7 @@ const Page = () => {
         />
       </div>
 
-      <div className="flex relative items-center justify-center h-screen flex-1">
+      <div className="flex relative w-[100vw] lg:w-[70vw] items-center justify-center h-screen flex-1">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>

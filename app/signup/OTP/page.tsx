@@ -20,6 +20,13 @@ const Page = () => {
   const [OTPLoading, setOTPLoading] = useState(false);
   const toast = useRef<Toast>(null);
   const router = useRouter();
+  const obscureEmail = (email: string) => {
+    const [localPart, domain] = email.split("@"); // Split the email into local part and domain
+    const visiblePart = localPart.slice(0, 4); // Get the first 4 characters
+    const obscuredPart = "*".repeat(localPart.length - 4); // Asterisk the rest of the local part
+    return `${visiblePart}${obscuredPart}@${domain}`; // Combine the visible part, asterisks, and domain
+  };
+  const obscuredEmail = obscureEmail(email);
   const handleOTP = async () => {
     setOTPLoading(true);
     try {
@@ -67,10 +74,11 @@ const Page = () => {
     <div className="flex h-screen ">
       <Toast ref={toast} />
       {/* Left section with background */}
-      <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden lg:flex flex-col hidden justify-between">
+      <div className="bg-[#0A3C43] w-[30vw] relative overflow-hidden lg:flex flex-col hidden justify-between">
         {/* Dark overlay */}
-
-        <div className="relative mt-10 ml-10 z-20">
+        <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
+        <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
+        <div className="relative mt-10 mx-auto z-20">
           <Image
             src={"/krialogo.svg"}
             alt="Kria logo"
@@ -79,26 +87,25 @@ const Page = () => {
             priority
           />
         </div>
-
         <Image
           src={"/mailbox.svg"}
           alt="hourglass logo"
           height={400}
-          width={400}
+          width={380}
           className="mx-auto"
           priority
         />
       </div>
 
-      <div className="flex relative items-center justify-center h-screen flex-1">
+      <div className="flex relative items-center w-[100vw] lg:w-[70vw] tracking-[-0.5]  px-5 justify-center h-screen flex-1">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="flex-col flex lg:justify-start lg:items-start justify-center items-center z-20">
-          <p className="text-sm text-center lg:text-left font-medium mb-20 w-[400px]">
-            A 6 digit code has been sent to your email
+          <p className="text-lg text-center lg:text-left font-medium mb-20 ">
+            A 6 digit code has been sent to your email {obscuredEmail}
           </p>
-          <p className="mb-10 text-left">Enter code</p>
+          <p className="mb-10 text-left font-semibold">Enter code</p>
           <InputOtp
             length={6}
             variant="flat"
@@ -117,7 +124,7 @@ const Page = () => {
           <Button
             onClick={handleOTP}
             disabled={otp.length < 6 || OTPLoading}
-            className="w-full h-14 mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+            className=" h-[50px] w-full mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             type="submit"
           >
             {OTPLoading ? "Verifying OTP" : "Verify"}

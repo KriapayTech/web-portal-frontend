@@ -11,6 +11,7 @@ import { HeroUIProvider } from "@heroui/react";
 import { Toaster } from "@/components/ui/toaster";
 import { PrimeReactProvider } from "primereact/api";
 import "primereact/resources/themes/lara-light-cyan/theme.css";
+import Sidebar from "@/components/Sidebar";
 
 const poppins = Poppins({
   variable: "--font-poppins",
@@ -32,9 +33,13 @@ export default function RootLayout({
             <ProtectedRoute>
               <HeroUIProvider>
                 <PrimeReactProvider>
-                  <Header />
                   <Toaster />
-                  {children}
+                  <div className="flex">
+                    <Sidebar />
+                    <div className="">
+                      <Header /> {children}
+                    </div>
+                  </div>
                 </PrimeReactProvider>
               </HeroUIProvider>
             </ProtectedRoute>
