@@ -86,10 +86,10 @@ const PasswordCreationPage: React.FC = () => {
   return (
     <div className="flex h-screen">
       <Toast ref={toast} />
-      <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden lg:flex flex-col hidden justify-between">
+      <div className="bg-[#0A3C43] w-[30vw] relative overflow-hidden lg:flex flex-col hidden justify-between">
         {/* Dark overlay */}
 
-        <div className="relative mt-10 ml-10 z-20">
+        <div className="relative mt-10 mx-auto z-20">
           <Image
             src={"/krialogo.svg"}
             alt="Kria logo"
@@ -108,7 +108,7 @@ const PasswordCreationPage: React.FC = () => {
           priority
         />
       </div>
-      <div className="flex flex-col flex-1 items-center justify-center min-h-screen ">
+      <div className="flex flex-col lg:w-[70vw] flex-1 items-center tracking-[-0.5] justify-center min-h-screen ">
         <div className="bg-white   p-6 w-full max-w-[600px]">
           <h2 className="text-base font-medium mb-6 text-left">
             Create a unique password to secure your acoount
@@ -136,7 +136,7 @@ const PasswordCreationPage: React.FC = () => {
                 className="absolute right-3 top-2 text-gray-600"
                 onClick={() => setIsVisible(!isVisible)}
               >
-                {isVisible ? <EyeClosed /> : <Eye />}
+                {isVisible ? <EyeClosed className="size-[13px]" /> : <Eye className="size-[13px]" />}
               </button>
             </div>
           </div>
@@ -195,7 +195,7 @@ const PasswordCreationPage: React.FC = () => {
           {/* Submit Button */}
           <Button
             onClick={handlePasswordSubmit}
-            className="w-full h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+            className="w-full h-[50px] mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             disabled={
               !password ||
               passwordLoading ||

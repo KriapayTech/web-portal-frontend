@@ -97,7 +97,7 @@ const Page = () => {
         />
       </div>
 
-      <div className="flex relative items-center lg:w-[70vw] px-5 justify-center h-screen flex-1">
+      <div className="flex relative items-center w-[100vw] lg:w-[70vw] tracking-[-0.5]  px-5 justify-center h-screen flex-1">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>

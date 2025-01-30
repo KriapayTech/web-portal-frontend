@@ -118,7 +118,7 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="bg-white flex-1 flex items-center lg:w-[70vw] lg:items-start px-5   lg:px-0  lg:pt-28 justify-center min-h-screen relative">
+      <div className="bg-white flex-1 flex items-center w-[100vw] lg:w-[70vw] lg:items-start px-5 tracking-[-1]   lg:px-0  lg:pt-28 justify-center min-h-screen relative">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
@@ -156,10 +156,10 @@ const Page = () => {
               />
               <button
                 type="button"
-                className="absolute right-3 top-10 text-gray-600"
+                className="absolute right-3 top-12 text-gray-600"
                 onClick={() => setIsVisible(!isVisible)}
               >
-                {isVisible ? <EyeClosed /> : <Eye />}
+                {isVisible ? <EyeClosed className="size-[13px]" /> : <Eye className="size-[13px]" />}
               </button>
             </div>
             <div className="lg:pt-10 tracking-[-1]  pt-8">

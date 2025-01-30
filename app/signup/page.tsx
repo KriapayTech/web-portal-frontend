@@ -141,7 +141,7 @@ const Page = () => {
             </div>
           </div>
 
-      <div className="bg-white flex-1 tracking-[-0.5] lg:w-[70vw] flex items-center lg:items-start lg:px-0 px-5  lg:pt-10 justify-center min-h-screen relative">
+      <div className="bg-white flex-1 tracking-[-0.5] lg:w-[70vw] w-[100vw] flex items-center lg:items-start lg:px-0 px-5  lg:pt-10 justify-center min-h-screen relative">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
