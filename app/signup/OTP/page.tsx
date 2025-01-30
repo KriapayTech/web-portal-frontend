@@ -67,10 +67,11 @@ const Page = () => {
     <div className="flex h-screen ">
       <Toast ref={toast} />
       {/* Left section with background */}
-      <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden lg:flex flex-col hidden justify-between">
+      <div className="bg-[#0A3C43] w-[30vw] relative overflow-hidden lg:flex flex-col hidden justify-between">
         {/* Dark overlay */}
-
-        <div className="relative mt-10 ml-10 z-20">
+        <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
+        <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
+        <div className="relative mt-10 mx-auto z-20">
           <Image
             src={"/krialogo.svg"}
             alt="Kria logo"
@@ -79,18 +80,17 @@ const Page = () => {
             priority
           />
         </div>
-
         <Image
           src={"/mailbox.svg"}
           alt="hourglass logo"
           height={400}
-          width={400}
+          width={380}
           className="mx-auto"
           priority
         />
       </div>
 
-      <div className="flex relative items-center justify-center h-screen flex-1">
+      <div className="flex relative items-center w-[70vw] justify-center h-screen flex-1">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>

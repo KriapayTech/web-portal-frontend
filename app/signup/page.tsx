@@ -102,48 +102,46 @@ const Page = () => {
   return (
     <div className="flex h-screen ">
       {/* Left section with background */}
-      <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden hidden lg:block">
-        {/* Dark overlay */}
-        <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
-        <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
-        <div className="absolute inset-0 bg-[#0A3C43] opacity-20 z-10"></div>
-        <div className="relative mt-10 ml-10 z-20">
-          <Image
-            src={"/krialogo.svg"}
-            alt="Kria logo"
-            height={100}
-            width={100}
-            priority
-          />
-        </div>
-        <Image
-          src={"/hourglass.svg"}
-          alt="hourglass logo"
-          height={500}
-          width={500}
-          className="absolute top-0 left-0 z-0"
-          priority
-        />{" "}
-        <Image
-          src={"/hourglass2.svg"}
-          alt="hourglass logo"
-          height={400}
-          width={400}
-          className="absolute bottom-0 -right-20 z-0"
-          priority
-        />
-        <div className="absolute bottom-20 left-0 w-full flex items-center justify-center flex-col mb-5 z-20">
-          <p className="text-3xl font-medium text-white">
-            Pay less to send more.
-          </p>
-          <p className="text-sm w-[323px] mt-10 font-medium text-center text-white">
-            Your money deserves better. Send money internationally with the
-            lowest transaction fees.
-          </p>
-        </div>
-      </div>
+     <div className="bg-[#0A3C43] w-[30vw] relative overflow-hidden hidden lg:block">
+            {/* Dark overlay */}
+            <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
+            <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
+            <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>
+            <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>
+            <div className="absolute inset-0 bg-[#0A3C43] opacity-20 z-10"></div>
+            <div className="relative mt-10 ml-10 z-20"></div>
+            <Image
+              src={"/hourglass.svg"}
+              alt="hourglass logo"
+              height={500}
+              width={500}
+              className="absolute top-0 left-0 z-0"
+              priority
+            />{" "}
+            <Image
+              src={"/hourglass2.svg"}
+              alt="hourglass logo"
+              height={400}
+              width={400}
+              className="absolute bottom-0 -right-20 z-0"
+              priority
+            />
+            <div className="absolute bottom-20 left-0 w-full flex items-center justify-center flex-col mb-5 z-20">
+              <Image
+                src={"/krialogo.svg"}
+                alt="Kria logo"
+                height={100}
+                width={100}
+                priority
+              />
+              <p className="text-sm w-[323px] mt-10 font-medium text-center text-white">
+                Your money deserves better. Send money internationally with the
+                lowest transaction fees.
+              </p>
+            </div>
+          </div>
 
-      <div className="bg-white flex-1 flex items-center lg:items-start lg:px-0 px-5  lg:pt-10 justify-center min-h-screen relative">
+      <div className="bg-white flex-1 tracking-[-0.5] lg:w-[70vw] flex items-center lg:items-start lg:px-0 px-5  lg:pt-10 justify-center min-h-screen relative">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
@@ -244,7 +242,7 @@ const Page = () => {
                   !formData.lastName ||
                   formData.phoneNumber.length < 10
                 }
-                className="w-full h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+                className="w-full h-14 mt-2 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
                 type="submit"
               >
                 {signInLoading ? "Signing you up " : "Sign up"}
