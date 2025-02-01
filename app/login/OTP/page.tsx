@@ -90,7 +90,7 @@ const Page = () => {
         />
       </div>
 
-      <div className="flex relative w-full px-5 lg:w-[70vw] items-center justify-center h-screen flex-1">
+      <div className="flex relative  px-5 w-[100vw] lg:w-[70vw] items-center justify-center h-screen flex-1">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
@@ -117,7 +117,7 @@ const Page = () => {
           <Button
             onClick={handleOTP}
             disabled={otp.length < 6 || OTPLoading}
-            className="w-full h-14 mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+            className="sm:w-[70vw] w-[90vw] lg:w-[400px] h-14 mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             type="submit"
           >
             {OTPLoading ? "Verifying OTP" : "Verify"}

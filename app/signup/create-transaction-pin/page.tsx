@@ -106,7 +106,7 @@ const Page = () => {
           <Button
             onClick={handleTransactionalPin}
             disabled={transactionalPin.length < 4 || pinLoading}
-            className="w-full h-[50px] mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+            className="lg:w-full  w-[90vw] sm:w-[70vw] h-[50px] mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             type="submit"
           >
             {pinLoading ? "Creating Pin" : "Verify"}

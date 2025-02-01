@@ -108,7 +108,7 @@ const PasswordCreationPage: React.FC = () => {
           priority
         />
       </div>
-      <div className="flex flex-col lg:w-[70vw] flex-1 items-center tracking-[-0.5] justify-center min-h-screen ">
+      <div className="flex flex-col lg:w-[70vw] w-[100vw] flex-1 items-center tracking-[-0.5] justify-center min-h-screen ">
         <div className="bg-white   p-6 w-full max-w-[600px]">
           <h2 className="text-base font-medium mb-6 text-left">
             Create a unique password to secure your acoount
@@ -136,7 +136,11 @@ const PasswordCreationPage: React.FC = () => {
                 className="absolute right-3 top-2 text-gray-600"
                 onClick={() => setIsVisible(!isVisible)}
               >
-                {isVisible ? <EyeClosed className="size-[13px]" /> : <Eye className="size-[13px]" />}
+                {isVisible ? (
+                  <EyeClosed className="size-[13px]" />
+                ) : (
+                  <Eye className="size-[13px]" />
+                )}
               </button>
             </div>
           </div>

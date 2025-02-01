@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { setEmail, setToken, setUser } from "@/Redux/slices/userSlice";
+import { RootState } from "@/Redux/store";
 import axios from "axios";
 import { Eye, EyeClosed } from "lucide-react";
 import Image from "next/image";
@@ -10,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Toast } from "primereact/toast";
 import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Page = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -19,6 +20,7 @@ const Page = () => {
   const [signInLoading, setSignInLoading] = useState(false);
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const { token, user } = useSelector((state: RootState) => state.user);
 
   const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -87,6 +89,8 @@ const Page = () => {
       setSignInLoading(false);
     }
   };
+  console.log(user, token);
+
   return (
     <div className="flex h-screen ">
       <Toast ref={toast} />

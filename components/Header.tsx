@@ -44,7 +44,6 @@ const Header = () => {
           life: 3000,
         });
         dispatch(setUser(null));
-        router.push("/login");
       } else {
         console.log("Unexpected error:", error);
         toast.current?.show({
@@ -53,6 +52,7 @@ const Header = () => {
           detail: "An unexpected error occurred",
           life: 3000,
         });
+        dispatch(setUser(null));
       }
     }
   };
@@ -81,7 +81,7 @@ const Header = () => {
   return (
     <header className=" ">
       <Toast ref={toast} />
-      {/* <div className=" justify-between px-20  py-8  relative hidden lg:flex w-[75vw] border-b-[1px] border-gray-400 ">
+      <div className=" justify-between px-20  py-8  relative hidden lg:flex w-[75vw] border-b-[1px] border-gray-400 ">
         {" "}
         <p className="text-2xl font-medium flex justify-center items-center gap-2">
           Hi,{" "}
@@ -103,8 +103,8 @@ const Header = () => {
           Notification
         </div>
       </div>
-      <div className=" py-6 lg:hidden flex">
-        <Menu />
+      <div className=" py-6 lg:hidden flex justify-between items-center px-5">
+        <Menu className="w-[22px] h-[14px]" />
         <Image
           src={"/krialogo.svg"}
           alt="Kria logo"
@@ -112,9 +112,9 @@ const Header = () => {
           width={85}
           priority
         />
-      </div> */}
+      </div>
 
-      {/* <button onClick={logout}>Log out</button> */}
+      <button onClick={logout}>Log out</button>
     </header>
   );
 };

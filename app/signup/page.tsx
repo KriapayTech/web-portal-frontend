@@ -230,7 +230,7 @@ const Page = () => {
                 className="border-b-2 pb-2 border-black custom-phone-input "
               />
             </div>
-            <div className=" pb-5">
+            <div className=" pb-20">
               <Button
                 disabled={
                   !formData.email ||
