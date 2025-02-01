@@ -124,7 +124,7 @@ const Page = () => {
           <Button
             onClick={handleOTP}
             disabled={otp.length < 6 || OTPLoading}
-            className=" h-[50px] w-full mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+            className=" h-[50px]  w-[90vw] lg:w-full  sm:w-[70vw] mt-20 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             type="submit"
           >
             {OTPLoading ? "Verifying OTP" : "Verify"}

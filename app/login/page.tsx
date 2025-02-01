@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { setEmail, setToken, setUser } from "@/Redux/slices/userSlice";
+import { RootState } from "@/Redux/store";
 import axios from "axios";
 import { Eye, EyeClosed } from "lucide-react";
 import Image from "next/image";
@@ -10,7 +11,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { Toast } from "primereact/toast";
 import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 const Page = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -19,6 +20,7 @@ const Page = () => {
   const [signInLoading, setSignInLoading] = useState(false);
   const dispatch = useDispatch();
   const [isVisible, setIsVisible] = useState<boolean>(false);
+  const { token, user } = useSelector((state: RootState) => state.user);
 
   const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -46,7 +48,19 @@ const Page = () => {
         });
         dispatch(setEmail(formData.email));
         dispatch(setToken(res.data.kriapayToken));
-        dispatch(setUser(formData.email));
+        dispatch(
+          setUser({
+            dateOfBirth: "",
+            defaultCurrency: "",
+            email: "",
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+            referralID: "",
+            tier: 0,
+            _id: "",
+          })
+        );
         router.push("/");
         setFormData({
           email: "",
@@ -56,7 +70,7 @@ const Page = () => {
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        console.log(error.response?.data?.error);
+        console.log(error);
         toast.current?.show({
           severity: "error",
           summary: "Error",
@@ -75,6 +89,8 @@ const Page = () => {
       setSignInLoading(false);
     }
   };
+  console.log(user, token);
+
   return (
     <div className="flex h-screen ">
       <Toast ref={toast} />
@@ -139,7 +155,7 @@ const Page = () => {
                 type="email"
                 name="email"
                 value={formData.email}
-                className="w-96 h-14 rounded-lg text-lg outline-none border-[1px] border-black focus:border-none focus:outline-none"
+                className=" w-[90vw] lg:w-96 h-14 sm:w-[70vw] rounded-lg text-lg outline-none border-[1px] border-black focus:border-none focus:outline-none"
                 onChange={handleSignIn}
                 placeholder="johndoe@gmail.com"
               />
@@ -150,7 +166,7 @@ const Page = () => {
                 id="current"
                 type={isVisible ? "text" : "password"}
                 name="password"
-                className="w-96 h-14 rounded-lg  outline-none border-[1px] border-black focus:border-none focus:outline-none"
+                className="  w-[90vw] lg:w-96 sm:w-[70vw] h-14 rounded-lg  outline-none border-[1px] border-black focus:border-none focus:outline-none"
                 value={formData.password}
                 onChange={handleSignIn}
               />
@@ -159,7 +175,11 @@ const Page = () => {
                 className="absolute right-3 top-12 text-gray-600"
                 onClick={() => setIsVisible(!isVisible)}
               >
-                {isVisible ? <EyeClosed className="size-[13px]" /> : <Eye className="size-[13px]" />}
+                {isVisible ? (
+                  <EyeClosed className="size-[13px]" />
+                ) : (
+                  <Eye className="size-[13px]" />
+                )}
               </button>
             </div>
             <div className="lg:pt-10 tracking-[-1]  pt-8">
@@ -174,7 +194,7 @@ const Page = () => {
                 disabled={
                   !formData.password || !formData.email || signInLoading
                 }
-                className="w-96 h-[50px] mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+                className=" w-[90vw] sm:w-[70vw] lg:w-96 h-[50px] mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
                 type="submit"
               >
                 {signInLoading ? "Logging you in " : "Log in"}

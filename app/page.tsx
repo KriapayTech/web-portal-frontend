@@ -21,14 +21,17 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Select, SelectItem } from "@heroui/react";
+import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className=" relative">
+    <div className=" relative lg:w-[75vw]">
       <div className="flex justify-end mt-10 px-20">
-        <Button className="w-28 h-7 p-4 text-xs font-semibold  rounded-3xl bg-[#0A3C43] text-white">
-          Add Wallet +
-        </Button>
+        <Link href="/add-wallet">
+          <Button className="w-28 h-7 p-4 text-xs font-semibold  rounded-3xl bg-[#0A3C43] text-white">
+            Add Wallet +
+          </Button>
+        </Link>
       </div>
       <div className="">
         <div className="border-b-[1px] border-gray-400 mb-5">
@@ -100,7 +103,6 @@ export default function Home() {
                 className="w-40"
                 color="default"
                 defaultSelectedKeys={[`debit`]}
-
                 selectorIcon={<ArrowUpDownIcon />}
               >
                 <SelectItem key="debit">Debit</SelectItem>
