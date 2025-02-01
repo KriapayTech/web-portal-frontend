@@ -18,7 +18,7 @@ export const countries = [
 
 const page = () => {
   return (
-    <div className="flex flex-col justify-center items-center mx-auto tracking-[-0.5] h-[100vh] w-[100vw] px-5  lg:h-[50vh] relative  lg:px-0">
+    <div className="flex flex-col justify-center items-center mx-auto tracking-[-0.5] h-[100vh] lg:w-[75vw]  w-[100vw] px-5  lg:h-[50vh] relative  lg:px-0">
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>

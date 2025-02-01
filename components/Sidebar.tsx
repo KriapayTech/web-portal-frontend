@@ -22,7 +22,7 @@ const Sidebar = () => {
       return null;
     }
   return (
-    <div className="bg-[#0A3C43] w-1/4 relative overflow-hidden hidden lg:block h-screen">
+    <div className="bg-[#0A3C43] w-[25vw] relative overflow-hidden hidden lg:block h-screen">
       {/* Dark overlay */}
       <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
       <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}

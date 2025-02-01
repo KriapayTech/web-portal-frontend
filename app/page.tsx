@@ -25,7 +25,7 @@ import Link from "next/link";
 
 export default function Home() {
   return (
-    <div className=" relative">
+    <div className=" relative lg:w-[75vw]">
       <div className="flex justify-end mt-10 px-20">
         <Link href="/add-wallet">
           <Button className="w-28 h-7 p-4 text-xs font-semibold  rounded-3xl bg-[#0A3C43] text-white">

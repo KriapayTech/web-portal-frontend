@@ -6,7 +6,6 @@ import axios from "axios";
 import { Menu } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
-
 import { Toast } from "primereact/toast";
 import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -103,18 +102,19 @@ const Header = () => {
           Notification
         </div>
       </div>
-      <div className=" py-6 lg:hidden flex justify-between items-center px-5">
-        <Menu className="w-[22px] h-[14px]" />
+      <div className=" lg:hidden flex  gap-5 pt-8 items-center px-5">
+        <Menu className="w-[40px] h-[30px]" />
         <Image
-          src={"/krialogo.svg"}
+          src={"/logo.svg"}
           alt="Kria logo"
           height={24}
           width={85}
           priority
+          className="h-[24px] w-[85px]"
         />
       </div>
-
-      <button onClick={logout}>Log out</button>
+    
+      {/* <button onClick={logout}>Log out</button> */}
     </header>
   );
 };
