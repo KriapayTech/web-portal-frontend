@@ -1,6 +1,7 @@
 "use client";
 import { setToken, setUser } from "@/Redux/slices/userSlice";
 import { RootState } from "@/Redux/store";
+import { Skeleton } from "@heroui/react";
 import axios from "axios";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
@@ -81,7 +82,14 @@ const Header = () => {
       <Toast ref={toast} />
       <div className="flex justify-between px-20">
         {" "}
-        <p className="text-2xl font-medium">Hi, {localUser?.firstName} </p>
+        <p className="text-2xl font-medium flex justify-center items-center gap-2">
+          Hi,{" "}
+          {localUser?.firstName === "" ? (
+            <Skeleton className="h-[20px] w-[200px] rounded-lg" />
+          ) : (
+            localUser?.firstName
+          )}{" "}
+        </p>
         <div className="flex items-center gap-2 text-sm">
           <Image
             src={"/bell.svg"}
