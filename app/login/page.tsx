@@ -151,7 +151,7 @@ const Page = () => {
                 type="email"
                 name="email"
                 value={formData.email}
-                className=" w-[90vw] lg:w-96 h-14 rounded-lg text-lg outline-none border-[1px] border-black focus:border-none focus:outline-none"
+                className=" w-[90vw] lg:w-96 h-14 sm:w-[70vw] rounded-lg text-lg outline-none border-[1px] border-black focus:border-none focus:outline-none"
                 onChange={handleSignIn}
                 placeholder="johndoe@gmail.com"
               />
@@ -162,7 +162,7 @@ const Page = () => {
                 id="current"
                 type={isVisible ? "text" : "password"}
                 name="password"
-                className="  w-[90vw] lg:w-96 h-14 rounded-lg  outline-none border-[1px] border-black focus:border-none focus:outline-none"
+                className="  w-[90vw] lg:w-96 sm:w-[70vw] h-14 rounded-lg  outline-none border-[1px] border-black focus:border-none focus:outline-none"
                 value={formData.password}
                 onChange={handleSignIn}
               />
@@ -190,7 +190,7 @@ const Page = () => {
                 disabled={
                   !formData.password || !formData.email || signInLoading
                 }
-                className=" w-[90vw] lg:w-96 h-[50px] mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+                className=" w-[90vw] sm:w-[70vw] lg:w-96 h-[50px] mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
                 type="submit"
               >
                 {signInLoading ? "Logging you in " : "Log in"}

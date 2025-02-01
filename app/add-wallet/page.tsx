@@ -29,7 +29,7 @@ const page = () => {
         </p>
 
         <Select
-          className="w-[90vw] h-[50px] lg:w-[380px] text-sm text-black"
+          className="w-[90vw] sm:w-[70vw] h-[50px] lg:w-[380px] text-sm text-black"
           label="Select wallet type"
           size="lg"
           items={countries}
@@ -69,7 +69,7 @@ const page = () => {
           )}
         </Select>
         <Button
-          className="w-[90vw]  lg:w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+          className="w-[90vw] sm:w-[70vw]  lg:w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
           type="submit"
         >
           {"Select"}
