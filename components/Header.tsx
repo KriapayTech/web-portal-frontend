@@ -3,6 +3,7 @@ import { setToken, setUser } from "@/Redux/slices/userSlice";
 import { RootState } from "@/Redux/store";
 import { Skeleton } from "@heroui/react";
 import axios from "axios";
+import { Menu } from "lucide-react";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
@@ -78,9 +79,9 @@ const Header = () => {
   }
 
   return (
-    <header className=" py-8  relative w-[75vw] border-b-[1px] border-gray-400">
+    <header className=" ">
       <Toast ref={toast} />
-      <div className="flex justify-between px-20">
+      <div className=" justify-between px-20  py-8  relative hidden lg:flex w-[75vw] border-b-[1px] border-gray-400 ">
         {" "}
         <p className="text-2xl font-medium flex justify-center items-center gap-2">
           Hi,{" "}
@@ -102,8 +103,19 @@ const Header = () => {
           Notification
         </div>
       </div>
+      <div className="px-5 lg:hidden flex">
+        <Menu />{" "}
+        <Image
+          src={"/hourglass.svg"}
+          alt="hourglass logo"
+          height={500}
+          width={500}
+          className="absolute top-0 left-0 z-0"
+          priority
+        />
+      </div>
 
-      <button onClick={logout}>Log out</button>
+      {/* <button onClick={logout}>Log out</button> */}
     </header>
   );
 };

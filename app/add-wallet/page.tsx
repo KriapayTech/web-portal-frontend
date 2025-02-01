@@ -18,8 +18,11 @@ export const countries = [
 
 const page = () => {
   return (
-    <div className="flex flex-col justify-center items-center tracking-[-0.5] lg:h-[50vh]">
-      <div className="text-left ">
+    <div className="flex flex-col justify-center items-center tracking-[-0.5] h-[100vh] lg:h-[50vh] relative px-5 lg:px-0">
+      <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+      <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+      <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+      <div className=" lg:text-left z-20 flex flex-col">
         <p className="font-medium text-lg mb-3 ">Add Wallet</p>
         <p className="text-sm font-normal  mb-5">
           Add from our selected wallets{" "}
@@ -65,13 +68,31 @@ const page = () => {
             </SelectItem>
           )}
         </Select>
+        <Button
+          className="w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+          type="submit"
+        >
+          {"Select"}
+        </Button>
       </div>
-      <Button
-        className="w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
-        type="submit"
-      >
-        {"Select"}
-      </Button>
+
+      <Image
+        src={"/hourglass.svg"}
+        alt="hourglass logo"
+        height={500}
+        width={500}
+        className="absolute top-0 lg:hidden -left-8 z-0"
+        priority
+      />
+
+      <Image
+        src={"/hourglass2.svg"}
+        alt="hourglass logo"
+        height={400}
+        width={400}
+        className="absolute bottom-10 right-0 lg:hidden z-0"
+        priority
+      />
     </div>
   );
 };
