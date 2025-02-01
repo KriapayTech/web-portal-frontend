@@ -81,7 +81,7 @@ const Header = () => {
   return (
     <header className=" ">
       <Toast ref={toast} />
-      <div className=" justify-between px-20  py-8  relative hidden lg:flex w-[75vw] border-b-[1px] border-gray-400 ">
+      {/* <div className=" justify-between px-20  py-8  relative hidden lg:flex w-[75vw] border-b-[1px] border-gray-400 ">
         {" "}
         <p className="text-2xl font-medium flex justify-center items-center gap-2">
           Hi,{" "}
@@ -103,17 +103,16 @@ const Header = () => {
           Notification
         </div>
       </div>
-      <div className="px-5 lg:hidden flex">
-        <Menu />{" "}
+      <div className=" py-6 lg:hidden flex">
+        <Menu />
         <Image
-          src={"/hourglass.svg"}
-          alt="hourglass logo"
-          height={500}
-          width={500}
-          className="absolute top-0 left-0 z-0"
+          src={"/krialogo.svg"}
+          alt="Kria logo"
+          height={24}
+          width={85}
           priority
         />
-      </div>
+      </div> */}
 
       {/* <button onClick={logout}>Log out</button> */}
     </header>

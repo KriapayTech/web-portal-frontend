@@ -18,18 +18,18 @@ export const countries = [
 
 const page = () => {
   return (
-    <div className="flex flex-col justify-center items-center tracking-[-0.5] h-[100vh] lg:h-[50vh] relative px-5 lg:px-0">
+    <div className="flex flex-col justify-center items-center mx-auto tracking-[-0.5] h-[100vh] w-[100vw] px-5  lg:h-[50vh] relative  lg:px-0">
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
-      <div className=" lg:text-left z-20 flex flex-col">
+      <div className=" lg:text-left  z-20 flex flex-col items-center justify-center ">
         <p className="font-medium text-lg mb-3 ">Add Wallet</p>
         <p className="text-sm font-normal  mb-5">
           Add from our selected wallets{" "}
         </p>
 
         <Select
-          className="w-[380px] text-sm text-black"
+          className="w-[90vw] h-[50px] lg:w-[380px] text-sm text-black"
           label="Select wallet type"
           size="lg"
           items={countries}
@@ -69,7 +69,7 @@ const page = () => {
           )}
         </Select>
         <Button
-          className="w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+          className="w-[90vw]  lg:w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
           type="submit"
         >
           {"Select"}

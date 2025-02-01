@@ -47,7 +47,7 @@ const Page = () => {
              </div>
            </div>
 
-      <div className="bg-white flex-1 flex items-center  px-8  lg:px-0  lg:pt-28 justify-center min-h-screen relative">
+      <div className="bg-white flex-1 flex items-center w-[100vw]  px-8  lg:px-0  lg:pt-28 justify-center min-h-screen relative">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
