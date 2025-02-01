@@ -1,20 +1,22 @@
 "use client";
-import { setUser } from "@/Redux/slices/userSlice";
+import { setToken, setUser } from "@/Redux/slices/userSlice";
 import { RootState } from "@/Redux/store";
 import axios from "axios";
 import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 
 import { Toast } from "primereact/toast";
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 const Header = () => {
   const toast = useRef<Toast>(null);
   const dispatch = useDispatch();
   const router = useRouter();
-  const { token } = useSelector((state: RootState) => state.user);
+  const { token, user } = useSelector((state: RootState) => state.user);
+  const [localUser, setLocalUser] = useState(user);
   const fetchUser = async () => {
+    if (!token) return;
     try {
       const res = await axios.get(
         "https://app.kriapay.com/get-profile-details",
@@ -27,6 +29,7 @@ const Header = () => {
       console.log(res);
       if (res.data.success) {
         dispatch(setUser(res.data.success));
+        setLocalUser(res.data.success);
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
@@ -51,10 +54,18 @@ const Header = () => {
       }
     }
   };
+  const logout = () => {
+    dispatch(setUser(null));
+    setLocalUser(null);
+    dispatch(setToken(""));
+  };
 
   useEffect(() => {
     fetchUser();
-  }, []);
+  }, [token]);
+  useEffect(() => {
+    setLocalUser(user); // Sync local state when Redux state updates
+  }, [user]);
   const pathname = usePathname();
   const isHeaderExcluded =
     pathname.includes("/login") ||
@@ -70,7 +81,7 @@ const Header = () => {
       <Toast ref={toast} />
       <div className="flex justify-between px-20">
         {" "}
-        <p className="text-2xl font-medium">Hi, </p>
+        <p className="text-2xl font-medium">Hi, {localUser?.firstName} </p>
         <div className="flex items-center gap-2 text-sm">
           <Image
             src={"/bell.svg"}
@@ -83,6 +94,8 @@ const Header = () => {
           Notification
         </div>
       </div>
+
+      <button onClick={logout}>Log out</button>
     </header>
   );
 };

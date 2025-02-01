@@ -46,7 +46,19 @@ const Page = () => {
         });
         dispatch(setEmail(formData.email));
         dispatch(setToken(res.data.kriapayToken));
-        dispatch(setUser(formData.email));
+        dispatch(
+          setUser({
+            dateOfBirth: "",
+            defaultCurrency: "",
+            email: "",
+            firstName: "",
+            lastName: "",
+            phoneNumber: "",
+            referralID: "",
+            tier: 0,
+            _id: "",
+          })
+        );
         router.push("/");
         setFormData({
           email: "",
@@ -56,7 +68,7 @@ const Page = () => {
       }
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        console.log(error.response?.data?.error);
+        console.log(error);
         toast.current?.show({
           severity: "error",
           summary: "Error",
@@ -159,7 +171,11 @@ const Page = () => {
                 className="absolute right-3 top-12 text-gray-600"
                 onClick={() => setIsVisible(!isVisible)}
               >
-                {isVisible ? <EyeClosed className="size-[13px]" /> : <Eye className="size-[13px]" />}
+                {isVisible ? (
+                  <EyeClosed className="size-[13px]" />
+                ) : (
+                  <Eye className="size-[13px]" />
+                )}
               </button>
             </div>
             <div className="lg:pt-10 tracking-[-1]  pt-8">

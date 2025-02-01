@@ -1,8 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
+export interface User {
+  dateOfBirth: string;
+  defaultCurrency: string;
+  email: string;
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  referralID: string;
+  tier: number;
+  _id: string;
+}
+
 export interface CounterState {
-  user: {} | null | string;
+  user: User | null ;
   loading: boolean;
   error: any;
   email: string;
@@ -24,7 +36,7 @@ export const counterSlice = createSlice({
     setEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
     },
-    setUser: (state, action: PayloadAction<object | string | null>) => {
+    setUser: (state, action: PayloadAction<User  | null>) => {
       state.user = action.payload;
     },
     setToken: (state, action: PayloadAction<string>) => {
