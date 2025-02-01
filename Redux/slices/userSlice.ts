@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
 
 export interface CounterState {
-  user: any;
+  user: {} | null | string;
   loading: boolean;
   error: any;
   email: string;
@@ -24,7 +24,7 @@ export const counterSlice = createSlice({
     setEmail: (state, action: PayloadAction<string>) => {
       state.email = action.payload;
     },
-    setUser: (state, action: PayloadAction<string>) => {
+    setUser: (state, action: PayloadAction<object | string | null>) => {
       state.user = action.payload;
     },
     setToken: (state, action: PayloadAction<string>) => {
@@ -34,6 +34,6 @@ export const counterSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { setEmail, setToken,setUser } = counterSlice.actions;
+export const { setEmail, setToken, setUser } = counterSlice.actions;
 
 export default counterSlice.reducer;
