@@ -84,15 +84,20 @@ const Page = () => {
     }
   };
 
-  const handleResendOTPResetPassword = async () => {
+  const handleResendOTP = async () => {
     setDisableResend(true);
     try {
-      const res = await axios.post(
-        "https://app.kriapay.com/auth/forgot-password",
-        { email: email }
-      );
+      const res = await axios.patch("https://app.kriapay.com/auth/resend-otp", {
+        email: email,
+      });
       console.log(res);
-      if (res.data.user) {
+      if (res.data.success) {
+        toast.current?.show({
+          severity: "success",
+          summary: "Success",
+          detail: res.data?.success || "An unexpected error occurred",
+          life: 3000,
+        });
         setTimeout(() => {
           setDisableResend(false);
         }, 15000);
@@ -212,7 +217,7 @@ const Page = () => {
           <p className="mt-10 text-sm">
             Didn’t receive any code?{" "}
             <span
-              onClick={handleResendOTPResetPassword}
+              onClick={handleResendOTP}
               className={`${
                 disableResend
                   ? "text-gray-400 cursor-not-allowed"
