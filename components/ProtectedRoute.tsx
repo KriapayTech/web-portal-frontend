@@ -14,7 +14,7 @@ const ProtectedRoute = ({ children }: Children) => {
     useEffect(() => {
       if (!loading && !user) {
         // Only redirect if the user is NOT on login or signup
-        if (!pathName.includes("/login") && !pathName.includes("/signup")) {
+        if (!pathName.includes("/login") && !pathName.includes("/signup") && !pathName.includes("/reset-password")) {
           router.push("/login");
         }
       }
@@ -26,7 +26,8 @@ const ProtectedRoute = ({ children }: Children) => {
     !user &&
     !pathName.includes("/login") &&
     !user &&
-    !pathName.includes("/signup")
+    !pathName.includes("/signup") &&  !user &&
+    !pathName.includes("/reset-password")
   ) {
     return null;
   }

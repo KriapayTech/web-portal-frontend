@@ -11,12 +11,11 @@ import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { useDispatch } from "react-redux";
 
 const Page = () => {
-  const [formData, setFormData] = useState({ email: "", password: "" });
+  const [formData, setFormData] = useState({ email: "" });
   const toast = useRef<Toast>(null);
   const router = useRouter();
   const [resetPasswordLoading, setResetPasswordLoading] = useState(false);
   const dispatch = useDispatch();
-
 
   const handleSignIn = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -31,7 +30,7 @@ const Page = () => {
 
     try {
       const res = await axios.post(
-        "https://app.kriapay.com/auth/login",
+        "https://app.kriapay.com/auth/forgot-password",
         formData
       );
       console.log(res);
@@ -43,11 +42,10 @@ const Page = () => {
           life: 3000,
         });
         dispatch(setEmail(formData.email));
-        router.push("/");
         setFormData({
           email: "",
-          password: "",
         });
+        router.push("/reset-password/OTP");
         setResetPasswordLoading(false);
       }
     } catch (error: unknown) {
@@ -75,7 +73,7 @@ const Page = () => {
     <div className="flex h-screen ">
       <Toast ref={toast} />
       {/* Left section with background */}
-      <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden hidden lg:block">
+      <div className="bg-[#0A3C43] w-[30vw] relative overflow-hidden hidden lg:block">
         {/* Dark overlay */}
         <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
         <div className="absolute inset-0 bg-[#0A3C43] opacity-50 z-10"></div>{" "}
@@ -112,7 +110,7 @@ const Page = () => {
         </div>
       </div>
 
-      <div className="bg-white flex-1 flex items-center  px-5  lg:px-0  lg:pt-10 justify-center min-h-screen relative">
+      <div className="bg-white flex-1 flex items-center w-[100vw] lg:w-[70vw]  px-5  lg:px-0  lg:pt-10 justify-center min-h-screen relative">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
@@ -121,8 +119,7 @@ const Page = () => {
             Reset your password,
           </p>
           <p className="text-sm font-medium mb-5">
-            Kindly put in your email address to receive your otp. A 6 digit code
-            would sent to this email.
+            Kindly put in your email address to receive your otp.
           </p>
           <form className="space-y-4 mt-4 " onSubmit={handleResetPassword}>
             <div className="space-y-2">
@@ -132,7 +129,7 @@ const Page = () => {
                 type="email"
                 name="email"
                 value={formData.email}
-                className="w-96 h-14 rounded-lg text-lg outline-none border-[1px] border-black focus:border-none focus:outline-none"
+                className="lg:w-96 w-[90vw] sm:w-[70vw] h-14 rounded-lg text-lg outline-none border-[1px] border-black focus:border-none focus:outline-none"
                 onChange={handleSignIn}
                 placeholder="johndoe@gmail.com"
               />
@@ -141,7 +138,7 @@ const Page = () => {
             <div className="lg:pt-10 pt-8">
               <Button
                 disabled={!formData.email || resetPasswordLoading}
-                className="w-96 h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+                className="lg:w-96 w-[90vw] sm:w-[70vw] h-14 mt-5 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
                 type="submit"
               >
                 {resetPasswordLoading ? "Loading... " : "Next"}
