@@ -21,6 +21,7 @@ const Page = () => {
   const { email } = useSelector((state: RootState) => state.user);
   const [password, setPassword] = useState("");
   const [OTPLoading, setOTPLoading] = useState(false);
+  const [disableResend, setDisableResend] = useState(false);
   const toast = useRef<Toast>(null);
   const router = useRouter();
   const [isVisible, setIsVisible] = useState<boolean>(false);
@@ -35,16 +36,20 @@ const Page = () => {
     },
   ];
   const handlePasswordChange = (e: ChangeEvent<HTMLInputElement>) => {
-    const {  value } = e.target;
+    const { value } = e.target;
     setPassword(value);
   };
   const handleOTP = async () => {
     setOTPLoading(true);
     try {
-      const res = await axios.patch("https://app.kriapay.com/auth/login/otp", {
-        email: email,
-        otp: otp,
-      });
+      const res = await axios.patch(
+        "https://app.kriapay.com/auth/forgot-password/otp",
+        {
+          email: email,
+          otp: otp,
+          password: password,
+        }
+      );
       console.log(res);
       if (res.data.success) {
         toast.current?.show({
@@ -53,7 +58,7 @@ const Page = () => {
           detail: res.data.success,
           life: 3000,
         });
-        router.push("/signup/create-password");
+        router.push("/login");
 
         // setOTPLoading(false);
       }
@@ -78,11 +83,47 @@ const Page = () => {
       setOTPLoading(false);
     }
   };
+
+  const handleResendOTPResetPassword = async () => {
+    setDisableResend(true);
+    try {
+      const res = await axios.post(
+        "https://app.kriapay.com/auth/forgot-password",
+        { email: email }
+      );
+      console.log(res);
+      if (res.data.user) {
+        setTimeout(() => {
+          setDisableResend(false);
+        }, 15000);
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response?.data?.error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: error.response?.data?.error || "An unexpected error occurred",
+          life: 3000,
+        });
+        setDisableResend(false);
+      } else {
+        console.log("Unexpected error:", error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "An unexpected error occurred",
+          life: 3000,
+        });
+        setDisableResend(false);
+      }
+    }
+  };
   return (
     <div className="flex h-screen ">
       <Toast ref={toast} />
       {/* Left section with background */}
-      <div className="bg-[#0A3C43] w-1/3 relative overflow-hidden lg:flex flex-col hidden justify-between">
+      <div className="bg-[#0A3C43] w-[30vw] relative overflow-hidden lg:flex flex-col hidden justify-between">
         {/* Dark overlay */}
 
         <div className="relative mt-10 ml-10 z-20">
@@ -105,13 +146,13 @@ const Page = () => {
         />
       </div>
 
-      <div className="flex relative items-center justify-center h-screen flex-1">
+      <div className="flex relative items-center w-[100vw] lg:w-[70vw] min-h-screen px-5 justify-center  flex-1">
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
         <div className="flex-col flex lg:justify-start lg:items-start justify-center items-center z-20">
-          <p className="text-sm text-center lg:text-left font-medium mb-5 w-[400px]">
-            A 6 digit code has been sent to your email
+          <p className="text-base text-center lg:text-left font-medium mb-5 w-[400px]">
+            A 6 digit code has been sent to your email {email}
           </p>
           <p className="mb-5 text-left">Enter code</p>
           <InputOtp
@@ -123,13 +164,15 @@ const Page = () => {
             size="lg"
             width={200}
           />
-          <p className="mb-5 text-left">Enter new pasword</p>
+
+          <p className="mb-5 mt-5 text-left">Enter new pasword</p>
+
           <div className="relative">
             <Input
               id="current"
               type={isVisible ? "text" : "password"}
               name="password"
-              className="w-96 h-14 rounded-lg  outline-none border-[1px] border-black focus:border-none focus:outline-none"
+              className="lg:w-96 w-[90vw] sm:w-[70vw] h-14 rounded-lg  outline-none border-[1px] border-black focus:border-none focus:outline-none"
               value={password}
               onChange={handlePasswordChange}
             />
@@ -138,7 +181,11 @@ const Page = () => {
               className="absolute right-3 top-5 text-gray-600"
               onClick={() => setIsVisible(!isVisible)}
             >
-              {isVisible ? <EyeClosed /> : <Eye />}
+              {isVisible ? (
+                <EyeClosed className="size-[13px]" />
+              ) : (
+                <Eye className="size-[13px]" />
+              )}
             </button>
           </div>
 
@@ -164,20 +211,26 @@ const Page = () => {
           </div>
           <p className="mt-10 text-sm">
             Didn’t receive any code?{" "}
-            <span onClick={handleOTP} className="text-green-500">
+            <span
+              onClick={handleResendOTPResetPassword}
+              className={`${
+                disableResend
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-green-500 cursor-pointer"
+              }  `}
+            >
               Resend
             </span>{" "}
           </p>
           <Button
-            // onClick={handleOTP}
-            onClick={() => console.log(password, otp)}
+            onClick={handleOTP}
             disabled={
               otp.length < 6 ||
               OTPLoading ||
               !validations.every((validation) => validation.test(password)) ||
               !password
             }
-            className="w-full h-14 mt-10 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+            className="lg:w-96 w-[90vw] sm:w-[70vw] h-14 mt-10 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
             type="submit"
           >
             {OTPLoading ? "Verifying OTP" : "Verify"}

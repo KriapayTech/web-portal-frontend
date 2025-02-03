@@ -34,13 +34,7 @@ const Page = () => {
         formData
       );
       console.log(res);
-      if (res.data.success) {
-        toast.current?.show({
-          severity: "success",
-          summary: "Success",
-          detail: res.data.success,
-          life: 3000,
-        });
+      if (res.data.user) {
         dispatch(setEmail(formData.email));
         setFormData({
           email: "",
