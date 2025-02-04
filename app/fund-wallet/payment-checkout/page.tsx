@@ -15,6 +15,7 @@ import { ArrowUpDownIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useRouter } from "next/navigation";
 
 type Country = {
   key: string;
@@ -31,7 +32,7 @@ const page = () => {
   const { token, user } = useSelector((state: RootState) => state.user);
   const { wallet } = useSelector((state: RootState) => state.transaction);
   const [value, setValue] = useState("");
-
+  const router = useRouter();
   const dispatch = useDispatch();
   const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY || "";
   const componentProps = {
@@ -104,9 +105,12 @@ const page = () => {
         <PaystackButton
           className="w-[90vw] sm:w-[70vw]  lg:w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
           publicKey={publicKey} // Ensure it's always a string
-          amount={Number(value)}
+          amount={Number(value) * 100}
           email={user!.email}
-          onSuccess={(response) => console.log(response)}
+          onSuccess={(response) => {
+            router.push(`/fund-wallet/payment-checkout/${response.reference}`);
+            
+          }}
           onClose={() => console.log("Closed")}
           text="Pay Now"
         />
