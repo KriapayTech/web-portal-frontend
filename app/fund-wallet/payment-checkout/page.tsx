@@ -1,8 +1,15 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { PaystackButton } from "react-paystack";
 import { setWallet } from "@/Redux/slices/transactionSlice";
 import { RootState } from "@/Redux/store";
-import { Avatar, Input, Select, SelectedItems, SelectItem } from "@heroui/react";
+import {
+  Avatar,
+  Input,
+  Select,
+  SelectedItems,
+  SelectItem,
+} from "@heroui/react";
 import axios from "axios";
 import { ArrowUpDownIcon } from "lucide-react";
 import Image from "next/image";
@@ -23,7 +30,23 @@ export const countries = [
 const page = () => {
   const { token, user } = useSelector((state: RootState) => state.user);
   const { wallet } = useSelector((state: RootState) => state.transaction);
+  const [value, setValue] = useState("");
+
   const dispatch = useDispatch();
+  const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY || "";
+  const componentProps = {
+    email: user?.email,
+    amount: value,
+    metadata: {
+      name: user?.firstName + " " + user?.lastName,
+      phone: user?.phoneNumber,
+    },
+    publicKey,
+    text: "Pay Now",
+    onSuccess: () =>
+      alert("Thanks for doing business with us! Come back soon!!"),
+    onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+  };
 
   return (
     <div className="flex flex-col text-left justify-center items-center mx-auto tracking-[-0.5] h-[100vh] lg:w-[75vw]  w-[100vw] px-5  lg:h-[50vh] relative  lg:px-0">
@@ -62,7 +85,9 @@ const page = () => {
             </p>
           )}
         </div>
-        <p className="text-sm font-medium mt-10 mb-3">How much do you want to fund ? </p>
+        <p className="text-sm font-medium mt-10 mb-3">
+          How much do you want to fund ?{" "}
+        </p>
         <Input
           placeholder="0.00"
           startContent={
@@ -72,8 +97,19 @@ const page = () => {
           }
           className="w-[90vw] sm:w-[70vw]  lg:w-96 h-[100px] "
           type="number"
+          value={value}
+          onValueChange={setValue}
         />
 
+        <PaystackButton
+          className="w-[90vw] sm:w-[70vw]  lg:w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+          publicKey={publicKey} // Ensure it's always a string
+          amount={Number(value)}
+          email={user!.email}
+          onSuccess={(response) => console.log(response)}
+          onClose={() => console.log("Closed")}
+          text="Pay Now"
+        />
         <Button
           className="w-[90vw] sm:w-[70vw]  lg:w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
           type="submit"
