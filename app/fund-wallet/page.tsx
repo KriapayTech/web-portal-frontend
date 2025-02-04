@@ -1,12 +1,13 @@
 "use client";
 import { Button } from "@/components/ui/button";
+import { setWallet } from "@/Redux/slices/transactionSlice";
 import { RootState } from "@/Redux/store";
 import { Avatar, Select, SelectedItems, SelectItem } from "@heroui/react";
 import axios from "axios";
 import { ArrowUpDownIcon } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 type Country = {
   key: string;
@@ -21,6 +22,10 @@ export const countries = [
 
 const page = () => {
   const { token, user } = useSelector((state: RootState) => state.user);
+  const { wallet } = useSelector((state: RootState) => state.transaction);
+  const dispatch = useDispatch();
+  const state = useSelector((state: RootState) => state);
+  console.log("Redux State:", state);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(
     user?.defaultCurrency === "ngn" ? countries[0] : countries[1]
   );
@@ -49,6 +54,9 @@ const page = () => {
 
   useEffect(() => {
     getDepositEssentials();
+    if (user?.defaultCurrency === "ngn") {
+      dispatch(setWallet(countries[0].key));
+    }
   }, []);
   return (
     <div className="flex flex-col justify-center items-center mx-auto tracking-[-0.5] h-[100vh] lg:w-[75vw]  w-[100vw] px-5  lg:h-[50vh] relative  lg:px-0">
@@ -67,6 +75,7 @@ const page = () => {
             const selectedKey = Array.from(keys)[0];
 
             const country = countries.find((c) => c.key === selectedKey);
+            dispatch(setWallet(country!.key));
             setSelectedCountry(country || null);
           }}
           renderValue={(items: SelectedItems<Country>) => {
