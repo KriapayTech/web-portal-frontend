@@ -6,6 +6,7 @@ import { Avatar, Select, SelectedItems, SelectItem } from "@heroui/react";
 import axios from "axios";
 import { ArrowUpDownIcon } from "lucide-react";
 import Image from "next/image";
+import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
@@ -116,22 +117,25 @@ const page = () => {
         <div className="mt-5">
           {selectedCountry?.key === "nigeria" ? (
             <p className="text-green-600">
-              You selected Nigeria. NGN is available.
+            NGN is available.
             </p>
           ) : selectedCountry?.key === "sierra-leone" ? (
             <p className="text-blue-600">
-              You selected Sierra Leone. SLL is available.
+              SLL is available.
             </p>
           ) : (
             <p className="text-gray-500">Please select a country.</p>
           )}
         </div>
+        <Link href={'/fund-wallet/payment-checkout'}>
         <Button
           className="w-[90vw] sm:w-[70vw]  lg:w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
           type="submit"
         >
           {"Next"}
         </Button>
+        </Link>
+       
       </div>
 
       <Image

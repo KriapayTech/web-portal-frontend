@@ -103,23 +103,18 @@ const page = () => {
         />
 
         <PaystackButton
-          className="w-[90vw] sm:w-[70vw]  lg:w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+          className="w-[90vw] sm:w-[70vw]  lg:w-96 h-[45px] mt-10 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
           publicKey={publicKey} // Ensure it's always a string
           amount={Number(value) * 100}
           email={user!.email}
           onSuccess={(response) => {
             router.push(`/fund-wallet/payment-checkout/${response.reference}`);
-            
+
           }}
           onClose={() => console.log("Closed")}
           text="Pay Now"
         />
-        <Button
-          className="w-[90vw] sm:w-[70vw]  lg:w-96 h-[45px] mt-32 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
-          type="submit"
-        >
-          {"Next"}
-        </Button>
+       
       </div>
 
       <Image
