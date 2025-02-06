@@ -3,6 +3,7 @@ import { Button } from "@/components/ui/button";
 import { PaystackButton } from "react-paystack";
 import { setWallet } from "@/Redux/slices/transactionSlice";
 import { RootState } from "@/Redux/store";
+import { FlutterWaveButton, closePaymentModal } from "flutterwave-react-v3";
 import {
   Avatar,
   Input,
@@ -35,6 +36,49 @@ const page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY || "";
+  const flutterPublicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY_FLUTTER || "";
+
+  const componentProps = {
+    email: user?.email,
+    amount: value,
+    metadata: {
+      name: user?.firstName + " " + user?.lastName,
+      phone: user?.phoneNumber,
+    },
+    publicKey,
+    text: "Fund Now",
+    onSuccess: () =>
+      alert("Thanks for doing business with us! Come back soon!!"),
+    onClose: () => alert("Wait! You need this oil, don't go!!!!"),
+  };
+
+  const config = {
+    public_key: flutterPublicKey,
+    tx_ref: Date.now(),
+    amount: value,
+    currency: "NGN",
+    payment_options: "card,mobilemoney,ussd",
+    customer: {
+      email: user?.email,
+      phone_number: user?.phoneNumber,
+      name: user?.firstName + " " + user?.lastName,
+    },
+    // customizations: {
+    //   title: "My store",
+    //   description: "Payment for items in cart",
+    //   logo: "https://st2.depositphotos.com/4403291/7418/v/450/depositphotos_74189661-stock-illustration-online-shop-log.jpg",
+    // },
+  };
+
+  const fwConfig = {
+    ...config,
+    text: "Fund now !",
+    callback: (response: any) => {
+      console.log(response);
+      closePaymentModal(); // this will close the modal programmatically
+    },
+    onClose: () => {},
+  };
 
   return (
     <div className="flex flex-col text-left justify-center items-center mx-auto tracking-[-0.5] h-[100vh] lg:w-[75vw]  w-[100vw] px-5  lg:h-[60vh] relative  lg:px-0">
@@ -43,7 +87,6 @@ const page = () => {
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
       <div className=" lg:text-left  z-20 flex flex-col items-start justify-center ">
         <p className="font-medium text-lg mb-3 ">Enter amount</p>
-
         <div className="bg-gray-200 flex justify-start  rounded-lg w-[90vw] sm:w-[70vw] h-[50px] lg:w-[380px]">
           {wallet === "nigeria" ? (
             <p className=" flex gap-4 ml-5 items-center">
@@ -104,8 +147,7 @@ const page = () => {
           {" "}
           <span className="text-black mr-1">Fee - </span> NGN 0
         </p>
-
-        <PaystackButton
+        {/* <PaystackButton
           className="w-[90vw] sm:w-[70vw]  lg:w-96 h-[45px] mt-10 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
           publicKey={publicKey} // Ensure it's always a string
           amount={Number(value) * 100}
@@ -114,7 +156,34 @@ const page = () => {
             router.push(`/fund-wallet/payment-checkout/${response.reference}`);
           }}
           onClose={() => console.log("Closed")}
-          text="Fund Now"
+          text="Pay Now"
+        /> */}{" "}
+        <FlutterWaveButton
+          className="w-[90vw] sm:w-[70vw] lg:w-96 h-[45px] mt-10 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+          public_key={flutterPublicKey}
+          tx_ref={Date.now().toString()}
+          amount={Number(value)}
+          currency="NGN"
+          payment_options="card,mobilemoney,ussd"
+          customer={{
+            email: user!.email,
+            phone_number: user!.phoneNumber,
+            name: `${user?.firstName} ${user?.lastName}`,
+          }}
+          customizations={{
+            title: "Fund NGN Wallet",
+            description: "Payment for items in cart",
+            logo: "/krialogo.svg",
+          }}
+          text="Fund now !"
+          callback={(response: any) => {
+            console.log(response);
+            router.push(
+              `/fund-wallet/payment-checkout/${response.transaction_id}`
+            );
+             closePaymentModal(); // this will close the modal programmatically
+          }}
+          onClose={() => {}}
         />
       </div>
 
