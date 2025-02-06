@@ -11,7 +11,7 @@ import {
   SelectItem,
 } from "@heroui/react";
 import axios from "axios";
-import { ArrowUpDownIcon } from "lucide-react";
+import { ArrowUpDownIcon, CloudLightning } from "lucide-react";
 import Image from "next/image";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
@@ -35,22 +35,9 @@ const page = () => {
   const router = useRouter();
   const dispatch = useDispatch();
   const publicKey = process.env.NEXT_PUBLIC_PUBLIC_KEY || "";
-  const componentProps = {
-    email: user?.email,
-    amount: value,
-    metadata: {
-      name: user?.firstName + " " + user?.lastName,
-      phone: user?.phoneNumber,
-    },
-    publicKey,
-    text: "Pay Now",
-    onSuccess: () =>
-      alert("Thanks for doing business with us! Come back soon!!"),
-    onClose: () => alert("Wait! You need this oil, don't go!!!!"),
-  };
 
   return (
-    <div className="flex flex-col text-left justify-center items-center mx-auto tracking-[-0.5] h-[100vh] lg:w-[75vw]  w-[100vw] px-5  lg:h-[50vh] relative  lg:px-0">
+    <div className="flex flex-col text-left justify-center items-center mx-auto tracking-[-0.5] h-[100vh] lg:w-[75vw]  w-[100vw] px-5  lg:h-[60vh] relative  lg:px-0">
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
@@ -101,6 +88,22 @@ const page = () => {
           value={value}
           onValueChange={setValue}
         />
+        <p className="font-medium text-sm text-green-500 flex items-center">
+          {" "}
+          <span className="text-black mr-1">Arrival time - </span>Instant
+          <Image
+            src={"/lightening.svg"}
+            alt="lightening logo"
+            height={12}
+            width={12}
+            className="ml-1"
+            priority
+          />
+        </p>
+        <p className="font-medium text-sm mt-2 text-green-500 flex items-center">
+          {" "}
+          <span className="text-black mr-1">Fee - </span> NGN 0
+        </p>
 
         <PaystackButton
           className="w-[90vw] sm:w-[70vw]  lg:w-96 h-[45px] mt-10 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
@@ -109,12 +112,10 @@ const page = () => {
           email={user!.email}
           onSuccess={(response) => {
             router.push(`/fund-wallet/payment-checkout/${response.reference}`);
-
           }}
           onClose={() => console.log("Closed")}
-          text="Pay Now"
+          text="Fund Now"
         />
-       
       </div>
 
       <Image
