@@ -7,39 +7,49 @@ import React, { useEffect, useState } from "react";
 
 const page = ({ params }: { params: { id: number } }) => {
   const secretKey = process.env.NEXT_PUBLIC_SECRET_KEY || "";
+  const flutterSecretKey = process.env.NEXT_PUBLIC_SECRET_KEY_FLUTTER || "";
   const [status, setStatus] = useState("");
   const [amount, setAmount] = useState("");
+
   const verifyTransaction = async () => {
+    if (!params.id) {
+      console.error("Transaction ID is missing");
+      return;
+    }
     try {
       const res = await axios.get(
-        `https://api.paystack.co/transaction/verify/${params.id}`,
+        `https://api.flutterwave.com/v3/transactions/${params.id.toString()}/verify`,
         {
           headers: {
-            Authorization: `Bearer ${secretKey}`,
+            accept: "application/json",
+            Authorization: `Bearer ${flutterSecretKey}`,
+            "Content-Type": "application/json",
           },
         }
       );
       console.log(res);
       setStatus(res.data.data.status);
-      setAmount((res.data.data.amount / 100).toString());
+      setAmount(res.data.data.amount.toString());
     } catch (error: unknown) {
       if (axios.isAxiosError(error)) {
-        console.log(error.response?.data?.autherror);
+        console.log(error);
       } else {
         console.log("Unexpected error:", error);
       }
     }
   };
   useEffect(() => {
-    verifyTransaction();
-  }, []);
+    if (params.id) {
+      verifyTransaction();
+    }
+  }, [params.id]);
   console.log(status);
   return (
     <div className="flex flex-col text-left justify-center items-center mx-auto tracking-[-0.5] h-[100vh] lg:w-[75vw]  w-[100vw] px-5  lg:h-[50vh] relative  lg:px-0">
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
       <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
-      {status === "success" && (
+      {status === "successful" && (
         <div className=" lg:text-left text-center z-20 flex flex-col items-center justify-center ">
           <Image
             src={"/check.svg"}
