@@ -114,7 +114,7 @@ const Header = () => {
         />
       </div>
     
-      {/* <button onClick={logout}>Log out</button> */}
+      <button onClick={logout}>Log out</button>
     </header>
   );
 };

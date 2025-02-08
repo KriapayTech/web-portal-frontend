@@ -39,17 +39,19 @@ export default function Home() {
             <p className="font-medium text-sm mb-10"> Quick Actions</p>
             <div className="flex justify-between">
               {" "}
-              <div className="w-40 h-14 flex gap-2 bg-gray-200 rounded-lg items-center justify-center">
-                <Image
-                  src={"/fundwallet.svg"}
-                  alt="fund wallet logo"
-                  height={17}
-                  width={17}
-                  className=""
-                  priority
-                />
-                <p className="text-sm font-medium">Fund Wallet</p>
-              </div>{" "}
+              <Link href={"/fund-wallet"}>
+                <div className="w-40 h-14 flex gap-2 bg-gray-200 rounded-lg items-center justify-center">
+                  <Image
+                    src={"/fundwallet.svg"}
+                    alt="fund wallet logo"
+                    height={17}
+                    width={17}
+                    className=""
+                    priority
+                  />
+                  <p className="text-sm font-medium">Fund Wallet</p>
+                </div>
+              </Link>
               <div className="w-40 h-14 flex gap-2 bg-gray-200 rounded-lg items-center justify-center">
                 <Image
                   src={"/sendmoney.svg"}

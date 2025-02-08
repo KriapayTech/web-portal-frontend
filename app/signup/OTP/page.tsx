@@ -18,6 +18,7 @@ const Page = () => {
   const [otp, setOtp] = useState("");
   const { email } = useSelector((state: RootState) => state.user);
   const [OTPLoading, setOTPLoading] = useState(false);
+  const [disableResend, setDisableResend] = useState(false);
   const toast = useRef<Toast>(null);
   const router = useRouter();
   const obscureEmail = (email: string) => {
@@ -70,6 +71,47 @@ const Page = () => {
       setOTPLoading(false);
     }
   };
+
+  const handleResendOTP = async () => {
+    setDisableResend(true);
+    try {
+      const res = await axios.patch("https://app.kriapay.com/auth/resend-otp", {
+        email: email,
+      });
+      console.log(res);
+      if (res.data.success) {
+        toast.current?.show({
+          severity: "success",
+          summary: "Success",
+          detail: res.data?.success || "An unexpected error occurred",
+          life: 3000,
+        });
+        setTimeout(() => {
+          setDisableResend(false);
+        }, 15000);
+      }
+    } catch (error: unknown) {
+      if (axios.isAxiosError(error)) {
+        console.log(error.response?.data?.error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: error.response?.data?.error || "An unexpected error occurred",
+          life: 3000,
+        });
+        setDisableResend(false);
+      } else {
+        console.log("Unexpected error:", error);
+        toast.current?.show({
+          severity: "error",
+          summary: "Error",
+          detail: "An unexpected error occurred",
+          life: 3000,
+        });
+        setDisableResend(false);
+      }
+    }
+  };
   return (
     <div className="flex h-screen ">
       <Toast ref={toast} />
@@ -117,7 +159,14 @@ const Page = () => {
           />
           <p className="mt-10 text-sm">
             Didn’t receive any code?{" "}
-            <span onClick={handleOTP} className="text-green-500">
+            <span
+              onClick={handleResendOTP}
+              className={`${
+                disableResend
+                  ? "text-gray-400 cursor-not-allowed"
+                  : "text-green-500 cursor-pointer"
+              }  `}
+            >
               Resend
             </span>{" "}
           </p>
