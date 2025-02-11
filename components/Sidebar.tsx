@@ -77,6 +77,14 @@ const Sidebar = () => {
           Profile
         </div>
       </div>
+      {/* <div className="absolute mt-12 w-full flex ml-10 gap-10 flex-col z-20">
+        
+        <div className=" text-white font-medium text-base flex items-center gap-3">
+          {" "}
+          <UserPen />
+          Profile
+        </div>
+      </div> */}
       <div className="absolute bottom-0 ml-10 left-0  flex items-center justify-center flex-col mb-5 z-20">
         {" "}
         <p className="font-medium text-sm pr-8 text-white">

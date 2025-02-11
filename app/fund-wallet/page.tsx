@@ -10,7 +10,7 @@ import Link from "next/link";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
-type Country = {
+export type Country = {
   key: string;
   label: string;
   flag: string;
@@ -26,7 +26,6 @@ const page = () => {
   const { wallet } = useSelector((state: RootState) => state.transaction);
   const dispatch = useDispatch();
   const state = useSelector((state: RootState) => state);
-  console.log("Redux State:", state);
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(
     user?.defaultCurrency === "ngn" ? countries[0] : countries[1]
   );
