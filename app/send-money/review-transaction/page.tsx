@@ -39,9 +39,15 @@ const page = () => {
           </div>
         </div>
 
-        <p className="text-sm font-medium py-4 text-left text-green-700">
-          John Alfredo
-        </p>
+        <div className="flex font-medium text-sm justify-between w-[90vw] sm:w-[70vw] border-b-2 border-gray-200 mt-5  py-5 lg:w-[380px] ">
+          <p>Bank</p> <p>Bank of Sierra Leone</p>
+        </div>
+        <div className="flex justify-between font-medium text-sm w-[90vw] sm:w-[70vw] border-b-2 border-gray-200   py-5 lg:w-[380px] ">
+          <p>Commision</p> <p>NGN 20.56</p>
+        </div>
+        <div className="flex justify-between font-medium text-sm w-[90vw] sm:w-[70vw]  py-5 lg:w-[380px] ">
+          <p>Total Debit</p> <p>NGN 115,000</p>
+        </div>
 
         <Button
           className="w-[90vw] sm:w-[70vw]  lg:w-[390px] h-[45px] mt-10 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
