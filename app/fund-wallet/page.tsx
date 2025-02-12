@@ -17,8 +17,8 @@ export type Country = {
 };
 
 export const countries = [
-  { key: "nigeria", label: "Nigeria", flag: "/nigeriaflag.svg" },
-  { key: "sierra-leone", label: "Sierra Leone", flag: "/sierraflag.svg" },
+  { key: "nigeria", label: "Naira", flag: "/nigeriaflag.svg" },
+  { key: "sierra-leone", label: "Leones", flag: "/sierraflag.svg" },
 ];
 
 const page = () => {

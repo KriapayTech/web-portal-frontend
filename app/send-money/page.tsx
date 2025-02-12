@@ -3,7 +3,8 @@ import Image from "next/image";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@/Redux/store";
-import { Select, SelectedItems, SelectItem } from "@heroui/react";
+import { Input, Select, SelectedItems, SelectItem } from "@heroui/react";
+import { Button } from "@/components/ui/button";
 
 type Country = {
   key: string;
@@ -12,13 +13,14 @@ type Country = {
 };
 
 export const countries = [
-  { key: "nigeria", label: "Nigeria", flag: "/nigeriaflag.svg" },
-  { key: "sierra-leone", label: "Sierra Leone", flag: "/sierraflag.svg" },
+  { key: "nigeria", label: "Naira", flag: "/nigeriaflag.svg" },
+  { key: "sierra-leone", label: "Leones", flag: "/sierraflag.svg" },
 ];
 
 const page = () => {
   const dispatch = useDispatch();
   const { token, user } = useSelector((state: RootState) => state.user);
+  const [value, setValue] = useState("");
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(
     user?.defaultCurrency === "ngn" ? countries[0] : countries[1]
   );
@@ -26,8 +28,11 @@ const page = () => {
     user?.defaultCurrency === "ngn" ? countries[1] : countries[0]
   );
   return (
-    <div className="flex flex-col justify-center items-center text-left mx-auto tracking-[-0.5] h-[100vh] lg:w-[75vw]  w-[100vw] px-5  lg:h-[50vh] relative  lg:px-0">
-      <div className="flex flex-col justify-center items-center text-left">
+    <div className="flex flex-col justify-center items-center   tracking-[-0.5] h-[80vh] lg:w-[75vw]  w-[100vw] px-5  lg:h-[70vh] relative  lg:px-0">
+         <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+      <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+      <div className="absolute inset-0 bg-white  opacity-50 z-10"></div>
+      <div className="flex flex-col z-20 justify-center items-center ">
         <p className="font-semibold text-lg mb-5 text-left items-start ">
           Send Money
         </p>
@@ -38,6 +43,7 @@ const page = () => {
           labelPlacement="outside"
           classNames={{
             trigger: "h-[60px]",
+            label: "pb-1 text-sm font-medium",
           }}
           variant="bordered"
           items={countries}
@@ -101,12 +107,13 @@ const page = () => {
         </Select>
 
         <Select
-          className="w-[90vw] sm:w-[70vw]  lg:w-[380px] text-sm text-black"
+          className="w-[90vw] sm:w-[70vw] mb-5  lg:w-[380px] text-sm text-black"
           size="lg"
           label="Beneficial Currency"
           labelPlacement="outside"
           classNames={{
             trigger: "h-[60px]",
+            label: "pb-1 text-sm font-medium",
           }}
           variant="bordered"
           items={countries}
@@ -156,7 +163,55 @@ const page = () => {
             </SelectItem>
           )}
         </Select>
+
+        <Input
+          label="Amount"
+          labelPlacement="outside"
+          placeholder="0.00"
+          variant="bordered"
+          startContent={
+            <div className="pointer-events-none flex items-center">
+              <span className="text-default-400 text-small">LNS</span>
+            </div>
+          }
+          className="w-[90vw] sm:w-[70vw]  lg:w-[380px]"
+          classNames={{
+            inputWrapper: "h-[50px]",
+            label: "pb-1 text-sm font-medium",
+          }}
+          type="number"
+          value={value}
+          onValueChange={setValue}
+        />
+
+        <p className="text-sm font-medium py-4 text-left">
+          NGN 115,000 will be deducted from your Naira wallet.
+        </p>
+
+        <Button
+          className="w-[90vw] sm:w-[70vw]  lg:w-[390px] h-[45px] mt-10 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
+          type="submit"
+        >
+          {"Next"}
+        </Button>
       </div>
+          <Image
+              src={"/hourglass.svg"}
+              alt="hourglass logo"
+              height={500}
+              width={500}
+              className="absolute top-0 lg:hidden -left-8 z-0"
+              priority
+            />
+      
+            <Image
+              src={"/hourglass2.svg"}
+              alt="hourglass logo"
+              height={400}
+              width={400}
+              className="absolute bottom-10 right-0 lg:hidden z-0"
+              priority
+            />
     </div>
   );
 };
