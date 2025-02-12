@@ -22,13 +22,20 @@ const page = () => {
   const [selectedCountry, setSelectedCountry] = useState<Country | null>(
     user?.defaultCurrency === "ngn" ? countries[0] : countries[1]
   );
+  const [beneficialWallet, setBeneficialWallet] = useState<Country | null>(
+    user?.defaultCurrency === "ngn" ? countries[1] : countries[0]
+  );
   return (
-    <div className="flex flex-col justify-center items-center mx-auto tracking-[-0.5] h-[100vh] lg:w-[75vw]  w-[100vw] px-5  lg:h-[50vh] relative  lg:px-0">
-      <div className="flex flex-col justify-center items-center ">
-        <p className="font-semibold text-lg">Send Money</p>
+    <div className="flex flex-col justify-center items-center text-left mx-auto tracking-[-0.5] h-[100vh] lg:w-[75vw]  w-[100vw] px-5  lg:h-[50vh] relative  lg:px-0">
+      <div className="flex flex-col justify-center items-center text-left">
+        <p className="font-semibold text-lg mb-5 text-left items-start ">
+          Send Money
+        </p>
         <Select
-          className="w-[90vw] sm:w-[70vw]  lg:w-[380px] text-sm text-black"
+          className="w-[90vw] sm:w-[70vw] mb-5  lg:w-[380px] text-sm text-black"
           size="lg"
+          label="Select wallet to debit"
+          labelPlacement="outside"
           classNames={{
             trigger: "h-[60px]",
           }}
@@ -87,6 +94,63 @@ const page = () => {
                     {" "}
                     Balance 200,000
                   </p>
+                </div>
+              </div>
+            </SelectItem>
+          )}
+        </Select>
+
+        <Select
+          className="w-[90vw] sm:w-[70vw]  lg:w-[380px] text-sm text-black"
+          size="lg"
+          label="Beneficial Currency"
+          labelPlacement="outside"
+          classNames={{
+            trigger: "h-[60px]",
+          }}
+          variant="bordered"
+          items={countries}
+          selectedKeys={beneficialWallet ? [beneficialWallet.key] : []}
+          onSelectionChange={(keys) => {
+            const selectedKey = Array.from(keys)[0];
+
+            const country = countries.find((c) => c.key === selectedKey);
+            setBeneficialWallet(country || null);
+          }}
+          renderValue={(items: SelectedItems<Country>) => {
+            return items.map((item) => (
+              <div key={item.key} className="flex gap-10 items-center relative">
+                <div className="flex items-center gap-2 py-2">
+                  <Image
+                    src={item.data!.flag}
+                    alt={item.data!.label}
+                    height={27}
+                    width={27}
+                    className="rounded-full my-10"
+                    priority
+                  />
+
+                  <div className="flex flex-col">
+                    <span>{item.data?.label}</span>
+                  </div>
+                </div>
+              </div>
+            ));
+          }}
+        >
+          {(country) => (
+            <SelectItem>
+              <div className="flex gap-10 relative ">
+                <div className="flex items-center gap-3">
+                  <Image
+                    src={country.flag}
+                    alt="ngn logo"
+                    height={27}
+                    width={27}
+                    priority
+                    className="rounded-full"
+                  />{" "}
+                  {country.label}
                 </div>
               </div>
             </SelectItem>
