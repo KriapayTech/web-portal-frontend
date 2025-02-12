@@ -53,7 +53,7 @@ const page = () => {
           className="w-[90vw] sm:w-[70vw]  lg:w-[390px] h-[45px] mt-10 rounded-md bg-[#0A3C43] text-white disabled:bg-gray-300"
           type="submit"
         >
-          {"Next"}
+        Proceed
         </Button>
       </div>
       <Image
